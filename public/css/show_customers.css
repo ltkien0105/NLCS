@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+
+/* ------------ ROOT VARIABLES ------------ */
+:root {
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-primary-variant: #111e88;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+    --color-background-search: #ECF2FF;
+
+    --radius: 36;
+    --offset: calc(226 - (226 * 81 / 100));
+}
+
+.dark-theme-variables {
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2em 3em var(var(--color-light));
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+    grid-template-columns: 14em auto;
+}
+
+.title-text {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.search-box {
+    width: 80%;
+    background-color: var(--color-background-search);
+    padding: 1em;
+    border-radius: 2em;
+    box-shadow: 0 1.8em 2.8em var(--color-light);
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1em;
+}
+
+.all-input {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1em;
+
+}
+
+.all-input .input-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-input .input-info input {
+    border: none;
+    padding: 0.5em;
+    font-size: 1em;
+    border-radius: 0.5em;
+}
+
+.apply-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    width: 5em;
+    padding: 0.5em;
+    background-color: #57c3cf;
+    justify-content: center;
+    margin: 0 auto 0;
+    transform: translateX(210%);
+}
+
+.apply-btn input {
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+}
+
+.apply-btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.all-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.all-button .add-btn:hover,
+.all-button .export-btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.all-button .add-btn ion-icon,
+.all-button .apply-btn ion-icon {
+    width: 1em;
+    height: 1em;
+    display: block;
+    fill: #fff;
+    font-size: 1em;
+    padding-right: 0.2em;
+}
+
+.all-button .add-btn,
+.all-button .export-btn {
+    border: none;
+    padding: 0.5em;
+    color: #fff;
+    background-color: #55b659;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.all-button .other-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.all-button .export-btn ion-icon {
+    padding-right: 0.1em;
+    transform: translateY(-10%);
+}
+
+/* Begin: Table */
+.table-cus {
+    width: 95%;
+}
+
+table {
+    width: 100%;
+    margin-top: 2em;
+}
+
+.table-cus a {
+    text-align: center;
+    display: block;
+    margin: 1em auto;
+    color: var(--color-primary);
+}
+
+/* End: Table */
+
+/* Begin: Modal */
+.container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.box-add {
+    display: flex;
+    flex-direction: column;
+    background-color: #ECF2FF;
+    width: 30%;
+    height: 65%;
+}
+
+.box-add h2 {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 2em;
+}
+
+.box-add .all-input {
+    margin-top: 2em;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 1em;
+    font-size: 1.2em;
+    padding: 0 2em;
+}
+
+.box-add .input-box {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.box-add .input-box label {
+    transform: translateY(10%);
+}
+
+.box-add .input-box input,
+.box-add .input-box .select-box {
+    width: 60%;
+}
+
+.box-add .input-box input {
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+
+.box-add .input-box .select-box {
+    height: 2em;
+}
+
+.box-add .input-box select {
+    width: 100%;
+    height: 100%;
+    font-size: 0.9em;
+}
+
+.box-add .submit-btn {
+    width: 100%;
+}
+
+.box-add .submit-btn input {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 0.5em;
+    background-color: #57c3cf;
+    border: none;
+}
+
+.box-add .submit-btn input:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.box-add p {
+    font-weight: 600;
+    font-size: 1.2em;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.8em;
+}
+
+.container.open {
+    display: flex;
+}
+/* End: Modal */
+
+
+

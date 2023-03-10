@@ -1,0 +1,694 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+/* ------------ ROOT VARIABLES ------------ */
+:root {
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-primary-variant: #111e88;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --radius: 36;
+    --offset: calc(226 - (226 * 81 / 100));
+}
+
+.dark-theme-variables {
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2em 3em var(var(--color-light));
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-size: 16px;
+    width: 96%;
+    height: 100vh;
+    background-color: var(--color-background);
+    font-family: "Poppins", sans-serif;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 14rem auto 23rem;
+    margin: 0 0;
+    gap: 1.8em;
+    width: 98vw;
+}
+
+.text-muted {
+    color: var(--color-dark);
+}
+
+.info, #menu-btn {
+    color: var(--color-dark);
+}
+
+/* ================= Begin: Sidebar =================*/
+.sidebar {
+    height: 100vh;
+    margin-left: 1em;
+}
+/* ----- Begin: Top Sidebar -----*/
+.top-sidebar {
+    display: flex;
+    width: 100%;
+    margin-top: 1em;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-background);
+    border-radius: 0.2em;
+}
+
+body.dark-theme-variables .top-sidebar .close-btn{
+    color: white;
+}
+
+.top-sidebar .close-btn {
+    padding-right: 0.4em;
+    border: none;
+    background-color: transparent;
+}
+
+.top-sidebar .logo img{
+    width: 3em;
+    height: 3em;
+}
+
+.top-sidebar .close-btn ion-icon {
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.top-sidebar .close-btn {
+    display: none;
+}
+/* ----- End: Top Sidebar -----*/
+
+/* ----- Begin: Content Sidebar -----*/
+.content-sidebar {
+    position: relative;
+    top: 2em;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-sidebar a {
+    position: relative;
+    gap: 1em;
+    color: rgb(83, 80, 80);
+    display: flex;
+    font-size: 1em;
+    align-items: center;
+    margin-left: 2em;
+    text-decoration: none;
+    height: 4em;
+    transition: all 0.3s ease;
+}
+
+.content-sidebar a.active {
+    background-color: #d9e2f7;
+    color: #A084DC;
+    margin-left: 0;
+    border-radius: 5px;
+}
+
+.content-sidebar a.active:before{
+    content: '';
+    width: 6px;
+    height: 100%;
+    background-color: #674188;
+}
+
+.content-sidebar a ion-icon {
+    font-size: 1.3em;
+    transition: all 0.3s ease;
+}
+
+.content-sidebar a.active ion-icon {
+    margin-left: calc(1em - 10px);
+}
+.content-sidebar a:hover {
+    color: #A084DC;
+}
+
+.content-sidebar a:hover ion-icon{
+    margin-left: 1em;
+}
+
+.content-sidebar a:last-child {
+    position: absolute;
+    width: 100%;
+    bottom: 32px;
+}
+
+/* ----- End: Content Sidebar -----*/
+/* ================= End: Sidebar =================*/
+
+/* ================= Begin: Dashboard ================= */
+.dashboard {
+    max-width: 100%;
+    margin-top: 1em;
+}
+
+.dashboard h1 {
+    color: var(--color-dark);
+}
+
+.dashboard .date {
+    display: inline-block;
+    background-color: var(--color-light);
+    border-radius: 0.4em;
+    margin-top: 1.5em;
+    padding: 0.4em 1.3em;
+}
+
+.dashboard .date input[type="date"] {
+    color: var(--color-dark);
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.dashboard .insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4em;
+}
+
+.dashboard .insights > div {
+    background-color: var(--color-white);
+    padding: 1.4em;
+    border-radius: 2em;
+    margin-top: 0.8em;
+    box-shadow: 0 1.8em 2.8em var(--color-light);
+    transition: all 0.3s ease;
+}
+
+.dashboard .insights > div:hover {
+    box-shadow: none;
+}
+
+.dashboard .insights > div ion-icon {
+    background-color: var(--color-primary);
+    padding: 0.2em;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 2em;
+}
+
+.dashboard .insights > div.expenses ion-icon {
+    background-color: var(--color-danger);
+}
+
+.dashboard .insights > div.income ion-icon {
+    background-color: var(--color-success);
+}
+
+.dashboard .insights > div .middle {
+    color: var(--color-dark);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard .insights h3 {
+    margin: 1em 0 1em;
+    font-size: 1em;
+}
+
+.dashboard .insights h1 {
+    margin-bottom: 1em;
+}
+
+.dashboard .insights .progress {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+}
+
+.dashboard .insights svg {
+    width: 7rem;
+    height: 7rem;
+}
+
+.dashboard .insights svg circle {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 226;
+    transform: translate(5px, 5px);
+    /* animation: dash 10s linear alternate; */
+}
+
+/* @keyframes dash {
+    from {
+        stroke-dashoffset: 226;
+    }
+    to {
+        stroke-dashoffset: var(--offset);
+    }
+} */
+
+.insights .sales svg circle {
+    stroke-dasharray: 226;
+    stroke-dashoffset: calc(226 - (226 * 81 / 100));
+}
+
+.insights .expenses svg circle {
+    stroke-dasharray: 226;
+    stroke-dashoffset: calc(226 - (226 * 62 / 100));
+}
+
+.insights .income svg circle {
+    stroke-dasharray: 226;
+    stroke-dashoffset: calc(226 - (226 * 44 / 100));
+}
+
+.insights .progress .number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.insights .text-muted {
+    font-size: 0.8em;
+    margin-top: 2em;
+}
+
+/* ================ Begin: Recent Orders ================*/
+.recent-order {
+    margin-top: 2em;
+}
+
+.recent-order h2 {
+    color: var(--color-dark);
+    margin-bottom: 0.8em;
+}
+
+table {
+    background-color: var(--color-white);
+    width: 100%;
+    border-radius: 2em;
+    padding: 1.8em;
+    text-align: center;
+    box-shadow: 0 2em 3em var(--color-light);
+    transition: all 0.3s ease;
+}
+
+table:hover {
+    box-shadow: none;
+}
+
+table thead th {
+    color: var(--color-dark);
+}
+
+table tbody td {
+    height: 2.8em;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+}
+
+table tbody tr:last-child td {
+    border: none;
+}
+
+.recent-order a {
+    text-align: center;
+    display: block;
+    margin: 1em auto;
+    color: var(--color-primary);
+}
+/* ================ End: Recent Orders ================*/
+
+/* ================ Begin: Right ================*/
+.right {
+    margin-top: 1.4em;
+}
+
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2em;
+}
+
+.right .top button {
+    display: none;;
+}
+
+.right .theme-toggler {
+    background-color: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6em;
+    width: 4.2em;
+    cursor: pointer;
+    border-radius: 0.4em;
+}
+
+.right .theme-toggler ion-icon {
+    font-size: 1.2em;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right .theme-toggler ion-icon[name='sunny-sharp'] {
+    color: white;
+}
+
+.right .theme-toggler ion-icon.active {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-radius: 0.4em;
+}
+
+.right .top .profile {
+    display: flex;
+    gap: 2em;
+    text-align: right;
+}
+
+/* ================ Begin: Recent Updates ================ */
+
+.right .recent-updates {
+    margin-top: 0.8em;
+}
+
+.right .recent-updates h2 {
+    color: var(--color-dark);
+    margin-bottom: 0.8em;
+}
+
+.right .recent-updates .update-list {
+    background-color: var(--color-white);
+    padding: 1.8em;
+    border-radius: 2em;
+    box-shadow: 0 2em 3em var(--color-light);
+    transition: all 0.3s ease;
+}
+
+.right .recent-updates .update-list:hover {
+    box-shadow: none;
+}
+
+.right .recent-updates .update-list .update {
+    color: var(--color-dark);
+    display: grid;
+    grid-template-columns: 2.6em auto;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+/* ================ BEGIN: SALES ANALYTICS ================*/
+
+.right .sales-analytics {
+    margin-top: 2em;
+
+}
+
+.right .sales-analytics h2 {
+    color: var(--color-dark);
+    margin-bottom: 0.8em;
+}
+
+.right .sales-analytics .item {
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 0.7em;
+    padding: 1.4em 1.8em;
+    border-radius: 1.2em;
+    box-shadow: 0 2em 3em var(--color-light);
+    transition: all 0.3s ease;
+}
+
+.right .sales-analytics .item:hover {
+    box-shadow: none;
+}
+
+.right .sales-analytics .item .icon {
+    padding: 0.6em;
+    color: var(--color-white);
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    display: flex;
+}
+
+.right .sales-analytics .item .right-sales {
+    color: var(--color-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+}
+
+.right .sales-analytics .item.offline .icon{
+    background-color: var(--color-danger);
+}
+
+.right .sales-analytics .item.customers .icon{
+    background-color: var(--color-success);
+}
+
+.right .sales-analytics .add-product {
+    background-color: transparent;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right .sales-analytics .add-product div {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+}
+
+.right .sales-analytics .add-product div h3 {
+    font-weight: 500;
+}
+
+/* ================ END: SALES ANALYTICS ================*/
+
+/* ================ End: Right ================*/
+/* ================= End: Dashboard ================= */
+
+/* ================= Begin: Media Queries ================= */
+/* Tablet */
+@media screen and (max-width: 1200px) {
+    .main {
+        width: 94%;
+        grid-template-columns: 7em auto 23em;
+    }
+
+    .sidebar .content-sidebar a{
+        width: 5.6em;
+    }
+
+    .sidebar .content-sidebar a:last-child {
+        position: relative;
+        margin-top: 2em;
+    }
+
+    .sidebar .content-sidebar h3 {
+        display: none;
+    }
+
+    .dashboard .insights {
+        grid-template-columns: 1fr;
+        gap: 0;
+    } 
+
+    .dashboard .recent-order {
+        position: absolute;
+        width: 94%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 6em 0 0 8.8em;
+    }
+
+    .dashboard .recent-order table {
+        width: 82vw;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+    .main {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .aside {
+        position: absolute;
+    }
+
+    .sidebar {
+        position: fixed;
+        margin-left: 0;
+        left: -100%;
+        background-color: var(--color-white);
+        width: 18em;
+        z-index: 3;
+        box-shadow: 1em 3em 4em var(--color-light);
+        height: 100vh;
+        display: none;
+        animation: showMenu 0.4s ease forwards;
+    }
+
+    @keyframes showMenu {
+        to {
+            left: 0;    
+        }
+    }
+
+    .sidebar .logo {
+        margin-left: 1em;
+    }
+
+    .sidebar .content-sidebar {
+        position: relative;
+    }
+
+    .sidebar .content-sidebar a {
+        width: 100%;
+    }
+
+    .sidebar .content-sidebar h3 {
+        display: inline;
+    }
+
+    .sidebar .close-btn {
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .sidebar .close-btn ion-icon {
+        font-size: 1em;
+    }
+
+    .open {
+        display: block;
+    }
+
+    .dashboard {
+        box-sizing: border-box;
+        margin-top: 8em;
+        padding: 0 1em;
+    }
+
+    .dashboard .insights > div {
+        width: 100%;
+        transform: translateX(3%);
+    }
+
+    .dashboard .recent-order {
+        position: relative;
+        margin: 3em 0 0 0;
+        width: 100%;
+    }
+
+    .dashboard .recent-order table {
+        width: 100%;
+        transform: translateX(2%);
+    }
+
+    .dashboard .recent-order table thead tr th:last-child {
+        display: none;
+    }
+
+    .dashboard .recent-order table tbody tr td:last-child {
+        display: none;
+    }
+
+    .right {
+        width: 94%;
+        margin: 1em auto;
+    }
+
+    .right .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        padding: 0 0.8em;
+        height: 4.6em;
+        background-color: var(--color-white);
+        width: 100%;
+        box-shadow: 0 1em 1em var(--color-light);
+        z-index: 1;
+    }
+
+    .right .top .dark-theme-variables {
+        background-color: var(--color-white);
+    }
+
+    .right .top .dark-theme-variables .info {
+        color: white;
+    }
+
+    .right .top .theme-toggler {
+        width: 4.4em;
+        position: absolute;
+        right: 55%;
+    }
+
+    .right .top .profile {
+        gap: 1em;
+    }
+
+    .right .top button {
+        position: absolute;
+        display: inline-block;
+        background-color: transparent;
+        cursor: pointer;
+        border: none;
+        left: 1em;
+    }
+
+    .right .top button ion-icon {
+        font-size: 2em;
+    }
+
+    .right .recent-updates,
+    .right .sales-analytics {
+        width: 96%;
+        transform: translateX(4%);
+    }
+}

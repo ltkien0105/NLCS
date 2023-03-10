@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: beige;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../assets/img/background-library.jpg');
+}
+
+.box {
+    position: relative;
+    width: 380px;
+    height: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #1c1c1c;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    inset: -50% 0 0 -50%;
+    width: 380px;
+    height: 420px;
+    transform-origin: bottom right;
+    background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+    animation: animate 6s linear infinite;
+}
+
+.box::after {
+    content: '';
+    position: absolute;
+    inset: -50% 0 0 -50%;
+    width: 380px;
+    height: 420px;
+    transform-origin: bottom right;
+    background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+    animation: animate 6s linear -3s infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.form {
+    position: absolute;
+    inset: 2px;
+    display: flex;
+    padding: 50px 40px;
+    border-radius: 20px;
+    flex-direction: column;
+    background-color: rgb(36, 35, 35);
+    z-index: 1;
+}
+
+.form h2 {
+    color: #45f3ff;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+.inputBox {
+    position: relative;
+    width: 100%;
+    margin-top: 30px
+}
+
+.inputBox input {
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 10px 10px;
+    letter-spacing: 0.05em;
+    font-size: 1.2em;
+    z-index: 2;
+}
+
+.inputBox span {
+    position: absolute;
+    padding: 10px 10px 10px 0px;
+    left: 0;
+    color: #8f8f8f;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    z-index: 2;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+    color: #45f3ff;
+    font-size: 0.75em;
+    transform: translateY(-34px);
+    padding-left: 0px;
+}
+
+.inputBox i {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 1;
+    transition: 0.5s;
+    pointer-events: none;
+    background-color: #45f3ff;
+}
+
+.inputBox input:valid ~ i,
+.inputBox input:focus ~ i {
+    height: 100%;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+}
+
+.links a {
+    font-size: 0.8em;
+    color: #45f3ff;
+    text-decoration: none;
+}
+
+.links a:hover {
+    opacity: 0.6;
+}
+
+.submit {
+    position: relative;
+}
+
+.login-btn {
+    width: 100%;
+    cursor: pointer;
+    color: #45f3ff;
+    border: solid #45f3ff;
+    padding: 8px 0px;
+    font-size: 1.2em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    transition: linear;
+    background-color: transparent;
+}
+
+.login-btn:hover {
+    color: #000;
+}
+
+.submit span {
+    position: absolute;
+    height: 100%;
+    width: 0;
+    left: 0;
+    bottom: 0;
+    transition: 0.5s;
+    background: #45f3ff;
+    z-index: -1;
+}
+
+.login-btn:hover + span {
+    width: 100%;
+}
+
+.to-signup {
+    border: none;
+    color: #45f3ff;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.to-signup:hover {
+    opacity: 0.8;
+}
+
+/* Sign up */
+
+.box.sign-up::before {
+    content: '';
+    position: absolute;
+    inset: -50% 0 0 -50%;
+    width: 100%;
+    height: 600px;
+    transform-origin: bottom right;
+    background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+    animation: animate 6s linear infinite;
+}
+
+.box.sign-up::after {
+    content: '';
+    position: absolute;
+    inset: -50% 0 0 -50%;
+    width: 100%;
+    height: 600px;
+    transform-origin: bottom right;
+    background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+    animation: animate 6s linear -3s infinite;
+}
+
+.box.sign-up {
+    width: 50%;
+    height: 85vh;
+    display: none;
+}
+
+.box.sign-up form .all-input{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2em;
+}
+
+.box.sign-up .submit {
+    margin-top: 40px;
+}
+
+.box.sign-up .had-account {
+    color: #fff;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 18px;
+}
+
+.box.sign-up .had-account button {
+    border: none;
+    background-color: transparent;
+    color: #45f3ff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.box.sign-up .had-account button:hover {
+    opacity: 0.8;
+}
