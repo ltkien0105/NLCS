@@ -251,3 +251,39 @@ body {
 .box.sign-up .had-account button:hover {
     opacity: 0.8;
 }
+
+select {
+    /* background-color: red; */
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 10px 10px;
+    letter-spacing: 0.05em;
+    font-size: 1.2em;
+    z-index: 2;
+}
+
+.inputBox span {
+    position: absolute;
+    padding: 10px 10px 10px 0px;
+    left: 0;
+    color: #8f8f8f;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    z-index: 2;
+}
+
+.inputBox select:valid ~ span,
+.inputBox select:focus ~ span {
+    color: #45f3ff;
+    font-size: 0.75em;
+    transform: translateY(-34px);
+    padding-left: 0px;
+}
+
+.inputBox select:valid ~ i,
+.inputBox select:focus ~ i{
+    height: 100%;
+}

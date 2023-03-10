@@ -20,7 +20,7 @@
         }
 
         //Execute query code
-        public function excute($sql) {
+        public function execute($sql) {
             $this->result = $this->conn->query($sql);
             return $this->result;
         }
@@ -38,7 +38,7 @@
         //Get data by id
         public function getReaderByUsername($username) {
             $sql = "SELECT * FROM readers WHERE reader_username='$username'";
-            $this->excute($sql);
+            $this->execute($sql);
             if($this->count_num_rows() != 0) {
                 $data = mysqli_fetch_array($this->result);
             } else {
@@ -61,7 +61,7 @@
         //Get all data
         public function getAllData($table) {
             $sql = "SELECT * FROM $table";
-            $this->excute($sql);
+            $this->execute($sql);
             if($this->count_num_rows() == 0) {
                 $data = 0;
             } else {
@@ -78,7 +78,7 @@
         public function insertReader($username, $fullname, $gender, $email, $address, $phonenumber) {
             $sql = "INSERT INTO readers(reader_username, reader_fullname, reader_gender, reader_email, reader_address, reader_phonenumber)
              VALUE('$username', '$fullname', '$gender', '$email', '$address', '$phonenumber')";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
         
         //Update customer's data
@@ -86,13 +86,13 @@
             $sql = "UPDATE readers SET reader_fullname='$fullname', reader_gender='$gender',
                     reader_email='$email', reader_address='$address', reader_phonenumber='$phonenumber' 
                     WHERE reader_username='$username'";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
 
         //Delete users
         public function deleteReader($username) {
             $sql = "DELETE FROM readers WHERE reader_username = $username";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
 
         // ------------ Books ------------
@@ -100,7 +100,7 @@
         public function insertBook($name, $author, $publisher, $category, $total_amount) {
             $sql = "INSERT INTO books(book_name, book_author, book_publisher, book_category, book_total_amount, book_remaining_amount)
              VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount')";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
         
         //Update book's data
@@ -109,13 +109,13 @@
                     book_publisher='$publisher', book_category='$category', book_total_amount=book_total_amount+$amount_added,
                     book_remaining_amount=book_remaining_amount+$amount_added
                     WHERE book_id='$id'";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
 
         //Delete book
         public function deleteBook($id) {
             $sql = "DELETE FROM books WHERE book_id = $id";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
 
         // ------------ Issue Books ------------
@@ -123,7 +123,7 @@
         public function insertIssueBook($reader_username, $book_id, $issue_date, $expired_date, $amount, $status='borrowing') {
             $sql = "INSERT INTO issue_books(reader_username, book_id, issue_date, expired_date, amount, status)
              VALUE('$reader_username', '$book_id', '$issue_date', '$expired_date', '$amount', '$status')";
-            return $this->excute($sql);
+            return $this->execute($sql);
         }
         
         //Update issue book's data
@@ -132,14 +132,20 @@
         //             book_publisher='$publisher', book_category='$category', book_total_amount=book_total_amount+$amount_added,
         //             book_remaining_amount=book_remaining_amount+$amount_added
         //             WHERE book_id='$id'";
-        //     return $this->excute($sql);
+        //     return $this->execute($sql);
         // }
 
         //Delete issue book
         // public function deleteIssueBook($id) {
         //     $sql = "DELETE FROM books WHERE book_id = $id";
-        //     return $this->excute($sql);
+        //     return $this->execute($sql);
         // }
+
+        // ------------ Accounts ------------
+        public function getAccount() {
+            $sql = 'SELECT * FROM accounts';
+            return $this->execute($sql);
+        }
     }
 
 ?>
