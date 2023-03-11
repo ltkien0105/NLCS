@@ -7,12 +7,14 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $data = $db->getAccount()->fetch_assoc();
-        print_r($data);
-        while($row = $data) {
-            echo $row['username'];
+        while($row = $db->getAccount()->fetch_assoc()) {
+            if($username == $row['username'] && $password == $row['password'] && $row['role'] == 'librarian') {
+                echo './mvc/view/dashboard.html';
+            } else if($username == $row['username'] && $password == $row['password'] && $row['role'] == 'reader') {
+                echo './mvc/view/user-profile.html';
+            }
         }
     } else {
-        echo "conga";
+        echo "Can't send data to database";
     }
 ?>

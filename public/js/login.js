@@ -26,6 +26,22 @@ $('document').ready(function() {
         signupBox.css('display', 'none');
     })
 
+    username.keypress(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            event.preventDefault();
+            loginBtn.click();
+        }
+    })
+
+    password.keypress(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            event.preventDefault();
+            loginBtn.click(); 
+        }
+    })
+
     loginBtn.click(function(e) {
         e.preventDefault();
 
@@ -36,10 +52,10 @@ $('document').ready(function() {
 
         $.ajax({
             url: './mvc/controller/Login.php',
-            type: 'POST',
+            type: 'post',
             data: values,
-            success: function(result) {
-                console.log(result);
+            success: function(data) {
+                location.href = data;
             },
             error: function(xhr, status, error) {
                 console.log(xhr);
@@ -47,5 +63,37 @@ $('document').ready(function() {
                 console.log(error);
             }
         })
+    })
+
+    signupBtn.click(function(e) {
+        e.preventDefault();
+
+        var values = {
+            signUpUsername: signUpUsername.val(),
+            signUpPassword: signUpPassword.val(),
+            signUpFullname: signUpFullname.val(),
+            gender: gender.val(),
+            signUpEmail: signUpEmail.val(),
+            signUpPhonenumber: signUpPhonenumber.val(),
+            signUpAddress: signUpAddress.val(),
+        }
+
+        if(signUpFullname.val() !== confirmPassword.val()) {
+            $.ajax({
+                url: './mvc/controller/SignUp.php',
+                type: 'post',
+                data: values,
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+                }
+            })   
+        } else {
+            alert("Confirm password doesn't match");
+        }
     })
 })

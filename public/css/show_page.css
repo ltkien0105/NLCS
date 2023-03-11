@@ -77,7 +77,8 @@ body {
     flex-direction: column;
 }
 
-.all-input .input-info input {
+.all-input .input-info input,
+.all-input .input-info select {
     border: none;
     padding: 0.5em;
     font-size: 1em;
@@ -96,7 +97,8 @@ body {
     transform: translateX(210%);
 }
 
-.apply-btn input {
+.apply-btn input,
+.apply-btn select {
     border: none;
     background-color: transparent;
     font-size: 1em;
@@ -175,13 +177,13 @@ table {
 
 /* Begin: Modal */
 .container {
-    position: fixed;
+    display: none;
+    position: absolute;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     width: 100%;
-    display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -190,11 +192,19 @@ table {
 }
 
 .box-add {
-    display: flex;
+    display: none;
     flex-direction: column;
     background-color: #ECF2FF;
     width: 30%;
-    height: 65%;
+    height: 75%;
+}
+
+.box-add.edit {
+    height: 60%;
+}
+
+.box-add select {
+    outline: none;
 }
 
 .box-add h2 {
@@ -276,6 +286,5 @@ table {
     display: flex;
 }
 /* End: Modal */
-
 
 
