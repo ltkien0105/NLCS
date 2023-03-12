@@ -3,8 +3,8 @@ $("document").ready(function () {
   const toSignUpBtn = $(".to-signup");
   const signinBox = $(".box.sign-in");
   const signupBox = $(".box.sign-up");
-  const loginBtn = $(".login-btn");
-  const signupBtn = $(".login-btn.signup");
+  const loginBtn = $("#login-btn");
+  const signupBtn = $("#signup-btn");
   const username = $("input[name='username']");
   const password = $("input[name='password']");
   const signUpUsername = $("input[name='signup-username']");
@@ -51,8 +51,8 @@ $("document").ready(function () {
     };
 
     $.ajax({
-      url: "./mvc/controller/Login.php",
-      type: "post",
+      url: './mvc/controller/Login.php',
+      type: 'post',
       data: values,
       success: function (data) {
         location.href = data;
@@ -80,8 +80,8 @@ $("document").ready(function () {
 
     if (signUpFullname.val() !== confirmPassword.val()) {
       $.ajax({
-        url: "./mvc/controller/SignUp.php",
-        type: "post",
+        url: './mvc/controller/SignUp.php',
+        type: 'post',
         data: values,
         success: function (data) {
           console.log(data);

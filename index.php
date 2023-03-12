@@ -15,12 +15,12 @@
                 <form action="">
                     <h2>Sign In</h2>
                     <div class="inputBox">
-                        <input type="text" required="required" name="username">
+                        <input type="text" name="username">
                         <span>Username</span>
                         <i></i>
                     </div>
                     <div class="inputBox">
-                        <input type="password" required="required" name="password">
+                        <input type="password" name="password">
                         <span>Password</span>
                         <i></i>
                     </div>
@@ -29,7 +29,7 @@
                         <button class="to-signup">Sign Up</button>
                     </div>
                     <div class = "submit">
-                        <input class="login-btn" type="submit" value="Login">
+                        <input id="login-btn" class="login-btn" type="submit" value="Login">
                         <span></span>
                     </div>
                 </form>
@@ -44,17 +44,17 @@
                     <h2>Sign Up</h2>
                     <div class="all-input">
                         <div class="inputBox">
-                            <input type="text" required="required" name="signup-username">
+                            <input type="text" name="signup-username">
                             <span>Username</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" required="required" name="signup-fullname">
+                            <input type="text" name="signup-fullname">
                             <span>Full Name</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <select id="gender" name="gender" required>
+                            <select id="gender" name="gender">
                                 <option value="" disabled selected></option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -64,33 +64,33 @@
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="email" required="required" name="signup-email">
+                            <input type="email" name="signup-email">
                             <span>Email</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" required="required" name="signup-phonenumber">
+                            <input type="text" name="signup-phonenumber">
                             <span>Phone number</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" required="required" name="signup-address">
+                            <input type="text" name="signup-address">
                             <span>Address</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="password" required="required" name="signup-password">
+                            <input type="password" name="signup-password">
                             <span>Password</span>
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="password" required="required" name="confirm-password">
+                            <input type="password" name="confirm-password">
                             <span>Confirm Password</span>
                             <i></i>
                         </div>
                     </div>
                     <div class="submit">
-                        <input class="login-btn signup" type="submit" value="Sign Up">
+                        <input id="signup-btn" class="login-btn signup" type="submit" value="Sign Up">
                         <span></span>
                     </div>
                     <div class="had-account">

@@ -7,10 +7,11 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        while($row = $db->getAccount()->fetch_assoc()) {
-            if($username == $row['username'] && $password == $row['password'] && $row['role'] == 'librarian') {
+        $data = $db->getAllData('accounts');
+        for($i = 0; $i < count($data); $i++) {
+            if($username == $data[$i]['username'] && $password == $data[$i]['password'] && $data[$i]['role'] == 'librarian') {
                 echo './mvc/view/dashboard.html';
-            } else if($username == $row['username'] && $password == $row['password'] && $row['role'] == 'reader') {
+            } else if($username == $data[$i]['username'] && $password == $data[$i]['password'] && $data[$i]['role'] == 'reader') {
                 echo './mvc/view/user-profile.html';
             }
         }

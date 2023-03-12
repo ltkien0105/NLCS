@@ -180,7 +180,7 @@
         }
 
         public function getAccount() {
-            $sql = 'SELECT * FROM accounts';
+            $sql = "SELECT * FROM accounts";
             return $this->execute($sql);
         }
 
