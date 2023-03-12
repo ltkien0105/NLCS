@@ -94,7 +94,7 @@ body {
     background-color: #57c3cf;
     justify-content: center;
     margin: 0 auto 0;
-    transform: translateX(210%);
+    transform: translateX(205%);
 }
 
 .apply-btn input,
@@ -241,6 +241,10 @@ table td {
     gap: 1em;
     font-size: 1.2em;
     padding: 0 2em;
+}
+
+.box-add .all-input select {
+    padding-left: 0.3em;
 }
 
 .box-add .input-box {
