@@ -130,6 +130,21 @@
             return $data;
         }
 
+        public function searchBook($id = '', $name = '', $author = '', $publisher = '', $category = '', $total_amount= '') {
+            $sql = "SELECT * FROM books WHERE ((book_id LIKE '%$id%') AND (book_name LIKE '%$name%') 
+                                            AND (book_author LIKE '%$author%') AND (book_publisher LIKE '%$publisher%') 
+                                            AND (book_category LIKE '%$category%') AND (book_total_amount LIKE '%$total_amount%'))";
+            $this->execute($sql);
+            if($this->count_num_rows() == 0) {
+                $data = 0;
+            } else {
+                while ($datas = $this->getData()) {
+                    $data[] = $datas;
+                }
+            }
+            return $data;
+        }
+
         // ------------ Issue Books ------------
         //Add issue book's data
         public function insertIssueBook($reader_username, $book_id, $issue_date, $expired_date, $amount, $status='borrowing') {

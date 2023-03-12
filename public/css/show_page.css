@@ -161,9 +161,18 @@ body {
     width: 95%;
 }
 
+.table-cus.book {
+    width: 98%;
+}
+
 table {
     width: 100%;
     margin-top: 2em;
+}
+
+table th,
+table td {
+    padding-right: 1rem;
 }
 
 .table-cus a {
@@ -178,7 +187,7 @@ table {
 /* Begin: Modal */
 .container {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
@@ -186,7 +195,7 @@ table {
     width: 100%;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     z-index: 2;
     background-color: rgba(0, 0, 0, 0.3);
 }
@@ -199,8 +208,16 @@ table {
     height: 75%;
 }
 
+.box-add.add.book {
+    height: 65%;
+}
+
 .box-add.edit {
     height: 60%;
+}
+
+.box-add.edit.book {
+    height: 65%;
 }
 
 .box-add select {
