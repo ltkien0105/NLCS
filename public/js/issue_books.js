@@ -12,28 +12,49 @@ $("document").ready(function () {
     const expiredDateAdd = $("input[name='add_issue_expired']");
     const issueDateEdit = $("input[name='edit_issue_date']");
     const expiredDateEdit = $("input[name='edit_issue_expired']");
-
+    const showAllBtn = $("#show-all");
+    var data = {};
+    
     $.ajax({
         url: "../controller/books/IssueBooks.php",
         type: "get",
-        success: function (data) {
-            const response = JSON.parse(data);
-            for (let row in response) {
-                $("tbody").append(`<tr>
-                <td>${response[row]["reader_username"]}</td>
-                <td>${response[row]["book_id"]}</td>
-                <td>${response[row]["issue_date"]}</td>
-                <td>${response[row]["expired_date"]}</td>
-                <td>${response[row]["amount"]}</td>
-                <td>${response[row]["issue_status"]}</td>
+        success: function (response) {
+            data = JSON.parse(response);
+        },
+    });
+
+    function loadDataToTable(data, rowStart, rowEnd) {
+        if(rowEnd > data.length) {
+            rowEnd = data.length;
+        }
+        for(let row = (rowStart-1); row < rowEnd; row++) {
+            $("tbody").append(`<tr>
+                <td>${data[row]["reader_username"]}</td>
+                <td>${data[row]["book_id"]}</td>
+                <td>${data[row]["issue_date"]}</td>
+                <td>${data[row]["expired_date"]}</td>
+                <td>${data[row]["amount"]}</td>
+                <td>${data[row]["issue_status"]}</td>
                 <td class="noExl">
                     <a class="edit-btn" href="#">Edit</a>
                     <a class="delete-btn" href="#">Delete</a>
                 </td>
             </tr>`);
-            }
-        },
-    });
+        }
+    }
+
+    setTimeout(function() {
+        console.log(data);
+        loadDataToTable(data,1,5);
+    }, 100)
+
+    showAllBtn.click(function(e) {
+        e.preventDefault();
+        var rowNumberCurrent = $("tbody tr").length;
+        if(rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        }
+    })
 
     issueDateSearch.datepicker({
         dateFormat: "dd/mm/yy",
@@ -95,7 +116,7 @@ $("document").ready(function () {
             // e.preventDefault();
             table2excel.export(document.querySelector("#table-issue-book"));
         });
-
+    
     function showModal() {
         container.addClass("open");
     }

@@ -7,28 +7,48 @@ $("document").ready(function () {
     const editSubmit = $('input[name="edit_reader_submit"]');
     const applyBtn = $(".apply-btn");
     const exportBtn = $(".export-btn");
+    const showAllBtn = $("#show-all");
+    var data = {};
 
     $.ajax({
         url: "../controller/readers/Readers.php",
         type: "get",
-        success: function (data) {
-            const response = JSON.parse(data);
-            for (let row in response) {
-                $("tbody").append(`<tr>
-                <td>${response[row]["reader_username"]}</td>
-                <td>${response[row]["reader_fullname"]}</td>
-                <td>${response[row]["reader_gender"]}</td>
-                <td>${response[row]["reader_email"]}</td>
-                <td>${response[row]["reader_address"]}</td>
-                <td>${response[row]["reader_phonenumber"]}</td>
+        success: function (response) {
+            data = JSON.parse(response);
+        },
+    });
+
+    function loadDataToTable(data, rowStart, rowEnd) {
+        if(rowEnd > data.length) {
+            rowEnd = data.length;
+        }
+        for(let row = (rowStart-1); row < rowEnd; row++) {
+            $("tbody").append(`<tr>
+                <td>${data[row]["reader_username"]}</td>
+                <td>${data[row]["reader_fullname"]}</td>
+                <td>${data[row]["reader_gender"]}</td>
+                <td>${data[row]["reader_email"]}</td>
+                <td>${data[row]["reader_address"]}</td>
+                <td>${data[row]["reader_phonenumber"]}</td>
                 <td class="noExl">
                     <a class="edit-btn" href="#">Edit</a>
                     <a class="delete-btn" href="#">Delete</a>
                 </td>
             </tr>`);
-            }
-        },
-    });
+        }
+    }
+
+    setTimeout(function() {
+        loadDataToTable(data,1,5);
+    }, 100)
+
+    showAllBtn.click(function(e) {
+        e.preventDefault();
+        var rowNumberCurrent = $("tbody tr").length;
+        if(rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        }
+    })
 
     var table2excel = new Table2Excel({
         exclude: ".noExl",
@@ -227,6 +247,7 @@ $("document").ready(function () {
                     }
                     $(this).toggle(result);
                 });
+                
         });
     });
 });

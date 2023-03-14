@@ -6,35 +6,48 @@ $("document").ready(function () {
     const addSubmit = $('input[name="add_book_submit"]');
     const editSubmit = $('input[name="edit_book_submit"]');
     const applyBtn = $(".apply-btn");
-    const exportBtn = $(".export-btn");
-    // var table2excel = new Table2Excel({
-    //     exclude: ".noExl",
-    //     name: "Table2Excel",
-    //     fileName: "TableCus.xls"
-    // });
-
+    const showAllBtn = $("#show-all");
+    var data = {};
+    
     $.ajax({
         url: "../controller/books/Books.php",
         type: "get",
-        success: function (data) {
-            const response = JSON.parse(data);
-            console.log(response);
-            for (let row in response) {
-                $("tbody").append(`<tr>
-                <td>${response[row]["book_id"]}</td>
-                <td>${response[row]["book_name"]}</td>
-                <td>${response[row]["book_author"]}</td>
-                <td>${response[row]["book_publisher"]}</td>
-                <td>${response[row]["book_category"]}</td>
-                <td>${response[row]["book_remaining_amount"]}/${response[row]["book_total_amount"]}</td>
+        success: function (response) {
+            data = JSON.parse(response);
+        },
+    });
+
+    function loadDataToTable(data, rowStart, rowEnd) {
+        if(rowEnd > data.length) {
+            rowEnd = data.length;
+        }
+        for(let row = (rowStart-1); row < rowEnd; row++) {
+            $("tbody").append(`<tr>
+                <td>${data[row]["book_id"]}</td>
+                <td>${data[row]["book_name"]}</td>
+                <td>${data[row]["book_author"]}</td>
+                <td>${data[row]["book_publisher"]}</td>
+                <td>${data[row]["book_category"]}</td>
+                <td>${data[row]["book_remaining_amount"]}/${data[row]["book_total_amount"]}</td>
                 <td class="noExl">
                     <a class="edit-btn" href="#">Edit</a>
                     <a class="delete-btn" href="#">Delete</a>
                 </td>
             </tr>`);
-            }
-        },
-    });
+        }
+    }
+
+    setTimeout(function() {
+        loadDataToTable(data,1,5);
+    }, 100)
+
+    showAllBtn.click(function(e) {
+        e.preventDefault();
+        var rowNumberCurrent = $("tbody tr").length;
+        if(rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        }
+    })
 
     var table2excel = new Table2Excel({
         exclude: ".noExl",
