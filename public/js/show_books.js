@@ -6,6 +6,12 @@ $("document").ready(function () {
     const addSubmit = $('input[name="add_book_submit"]');
     const editSubmit = $('input[name="edit_book_submit"]');
     const applyBtn = $(".apply-btn");
+    const exportBtn = $(".export-btn");
+    // var table2excel = new Table2Excel({
+    //     exclude: ".noExl",
+    //     name: "Table2Excel",
+    //     fileName: "TableCus.xls"
+    // });
 
     $.ajax({
         url: "../controller/books/Books.php",
@@ -21,13 +27,24 @@ $("document").ready(function () {
                 <td>${response[row]["book_publisher"]}</td>
                 <td>${response[row]["book_category"]}</td>
                 <td>${response[row]["book_remaining_amount"]}/${response[row]["book_total_amount"]}</td>
-                <td>
+                <td class="noExl">
                     <a class="edit-btn" href="#">Edit</a>
                     <a class="delete-btn" href="#">Delete</a>
                 </td>
             </tr>`);
             }
         },
+    });
+
+    var table2excel = new Table2Excel({
+        exclude: ".noExl",
+        name: "Worksheet name",
+        filename: "tablecus.xls"
+    });
+
+    document.getElementById('export-btn').addEventListener('click', function(e) {
+        // e.preventDefault();
+        table2excel.export(document.querySelector('#table-book'));
     });
 
     function showModal() {

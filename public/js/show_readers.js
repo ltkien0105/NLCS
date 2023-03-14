@@ -1,13 +1,12 @@
 $("document").ready(function () {
-    const deleteBtn = $(".delete-btn");
     const addBtn = $(".add-btn");
     const container = $(".container");
     const closeBtn = $(".close-btn");
     const boxAdd = $(".box-add");
-    const editBtn = $(".edit-btn");
     const addSubmit = $('input[name="add_reader_submit"]');
     const editSubmit = $('input[name="edit_reader_submit"]');
     const applyBtn = $(".apply-btn");
+    const exportBtn = $(".export-btn");
 
     $.ajax({
         url: "../controller/readers/Readers.php",
@@ -22,7 +21,7 @@ $("document").ready(function () {
                 <td>${response[row]["reader_email"]}</td>
                 <td>${response[row]["reader_address"]}</td>
                 <td>${response[row]["reader_phonenumber"]}</td>
-                <td>
+                <td class="noExl">
                     <a class="edit-btn" href="#">Edit</a>
                     <a class="delete-btn" href="#">Delete</a>
                 </td>
@@ -30,6 +29,19 @@ $("document").ready(function () {
             }
         },
     });
+
+    var table2excel = new Table2Excel({
+        exclude: ".noExl",
+        name: "Worksheet name",
+        filename: "tablecus.xls",
+    });
+
+    document
+        .getElementById("export-btn")
+        .addEventListener("click", function (e) {
+            // e.preventDefault();
+            table2excel.export(document.querySelector("#table-reader"));
+        });
 
     function showModal() {
         container.addClass("open");
@@ -117,18 +129,14 @@ $("document").ready(function () {
                 data: { usernameEdit: $(tds[0]).text() },
                 success: function (data) {
                     const response = JSON.parse(data);
-                    $('.box-add.edit input[name="username"]')
-                        .val(response[0])
-                    $('.box-add.edit input[name="fullname"]')
-                        .val(response[1])
-                    $('.box-add.edit select[name="gender"]')
-                        .val(response[2])
-                    $('.box-add.edit input[name="email"]')
-                        .val(response[3])
-                    $('.box-add.edit input[name="address"]')
-                        .val(response[4])
-                    $('.box-add.edit input[name="phonenumber"]')
-                        .val(response[5])
+                    $('.box-add.edit input[name="username"]').val(response[0]);
+                    $('.box-add.edit input[name="fullname"]').val(response[1]);
+                    $('.box-add.edit select[name="gender"]').val(response[2]);
+                    $('.box-add.edit input[name="email"]').val(response[3]);
+                    $('.box-add.edit input[name="address"]').val(response[4]);
+                    $('.box-add.edit input[name="phonenumber"]').val(
+                        response[5]
+                    );
                 },
             });
         }
@@ -199,13 +207,13 @@ $("document").ready(function () {
                     var result = true;
                     td = $(this).find("td");
                     for (let i = 0; i < values.length; i++) {
-                        if ((values[i] == null) || (values[i] == '')) {
+                        if (values[i] == null || values[i] == "") {
                             continue;
                         }
                         if (i == 2) {
-                          if(!($(td[i]).text() === values[i])) {
-                            result = false;
-                          }
+                            if (!($(td[i]).text() === values[i])) {
+                                result = false;
+                            }
                         } else {
                             if (
                                 !$(td[i])

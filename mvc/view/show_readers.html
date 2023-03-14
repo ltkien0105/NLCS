@@ -10,7 +10,11 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- Add jquery cdn -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/xlsx-style/dist/xlsx.core.min.js"></script>
+    <script src="../../node_modules/filesaver.js/FileSaver.min.js"></script>
+    <script src="../../node_modules/table2excel/dist/table2excel.js"></script>
 
     <title>Reader</title>
 </head>
@@ -43,12 +47,17 @@
                             <h3>Books</h3>
                         </a>
 
+                        <a href="./issue_books.html" class="books">
+                            <ion-icon name="bookmarks-sharp"></ion-icon>
+                            <h3>Issue Books</h3>
+                        </a>
+
                         <a href="#" class="reports">
                             <ion-icon name="bar-chart-sharp"></ion-icon>
                             <h3>Reports</h3>
                         </a>
 
-                        <a href="../index.html" class="logout">
+                        <a href="../../index.html" class="logout">
                             <ion-icon name="log-out-sharp"></ion-icon>
                             <h3>Log out</h3>
                         </a>
@@ -109,7 +118,7 @@
                                     <ion-icon name="add-circle-outline"></ion-icon>
                                     Add Reader
                                 </button>
-                                <button class="export-btn">
+                                <button id="export-btn" class="export-btn">
                                     <ion-icon name="share-sharp"></ion-icon>
                                     Export
                                 </button>
@@ -120,7 +129,7 @@
 
                     <!-- Begin: Table -->
                     <div class="table-cus">
-                        <table>
+                        <table id="table-reader">
                             <thead>
                                 <tr>
                                     <th>Username</th>
@@ -129,23 +138,10 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Phone Number</th>
-                                    <th>Actions</th>
+                                    <th class="noExl">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- <tr>
-                                    <td><?php echo $stt?></td>
-                                    <td><?php echo $value['reader_fullname']?></td>
-                                    <td><?php echo $value['reader_gender']?></td>
-                                    <td><?php echo $value['reader_email']?></td>
-                                    <td><?php echo $value['reader_address']?></td>
-                                    <td><?php echo $value['reader_phonenumber']?></td>
-                                    <td>
-                                        <a class="edit-btn" href="./edit_user.php?controller=users&action=edit&id=<?php echo $value['reader_username']?>">Edit</a>
-                                        <a class="delete-btn" href="./delete_user.php?controller=users&action=delete&id=<?php echo $value['reader_username']?>">Delete</a>
-                                    </td>
-                                </tr> -->
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                         <a href="">Show All</a>
                     </div>

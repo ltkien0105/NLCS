@@ -220,6 +220,14 @@ table td {
     height: 65%;
 }
 
+.box-add.add.issue-book {
+    height: 65%;
+}
+
+.box-add.edit.issue-book {
+    height: 70%;
+}
+
 .box-add select {
     outline: none;
 }

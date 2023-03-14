@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/humanity/jquery-ui.css">
+    <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <link rel="stylesheet" href="../../public/css/show_page.css">
+    <!-- Add icon source -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Add jquery cdn -->
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../../node_modules/xlsx-style/dist/xlsx.core.min.js"></script>
+    <script src="../../node_modules/filesaver.js/FileSaver.min.js"></script>
+    <script src="../../node_modules/table2excel/dist/table2excel.js"></script>
+    <title>Issue Books</title>
+</head>
+    <body>
+        <div>
+            <div class="main">
+                <!-- Begin: Sidebar -->
+                <div class="sidebar">
+                    <div class="top-sidebar">
+                        <div class="logo">
+                            <img src="../../public/assets/img/library-black-text.png" alt="">
+                        </div>
+                        <button class="close-btn">
+                            <ion-icon name="close-sharp"></ion-icon>
+                        </button>
+                    </div>
+                    <div class="content-sidebar">
+                        <a href="./dashboard.html" class="dashboard">
+                            <ion-icon name="apps-sharp"></ion-icon>
+                            <h3>Dashboard</h3>
+                        </a>
+
+                        <a href="./show_readers.html" class="readers">
+                            <ion-icon name="person-sharp"></ion-icon>
+                            <h3>Readers</h3>
+                        </a>
+
+                        <a href="./show_books.html" class="books">
+                            <ion-icon name="library-sharp"></ion-icon>
+                            <h3>Books</h3>
+                        </a>
+
+                        <a href="#" class="issue-books active">
+                            <ion-icon name="bookmarks-sharp"></ion-icon>
+                            <h3>Issue Books</h3>
+                        </a>
+
+                        <a href="#" class="reports">
+                            <ion-icon name="bar-chart-sharp"></ion-icon>
+                            <h3>Reports</h3>
+                        </a>
+
+                        <a href="../../index.html" class="logout">
+                            <ion-icon name="log-out-sharp"></ion-icon>
+                            <h3>Log out</h3>
+                        </a>
+                    </div>
+                </div>
+                <!-- End: Sidebar -->
+
+                <!-- Begin: Customer -->
+                <aside>
+                    <h2 class="title-text">Books</h2>
+                    <!-- Begin: Search Box -->
+                    <div class="search-box">
+                        <form action="" class="search-form">
+                            <div class="all-input">
+                                <div class="input-info">
+                                    <label for="">Reader's Username</label>
+                                    <input type="text" name="reader-username">
+                                </div>
+        
+                                <div class="input-info">
+                                    <label for="">Book ID</label>
+                                    <input type="text" name="book-id">
+                                </div>
+
+                                <div class="input-info">
+                                    <label for="">Issue Date</label>
+                                    <input type="text" name="issue-date">
+                                </div>
+        
+                                <div class="input-info">
+                                    <label for="">Expired Date</label>
+                                    <input type="text" name="expired-date">
+                                </div>
+        
+                                <div class="input-info">
+                                    <label for="">Amount</label>
+                                    <input type="text" name="amount">
+                                </div>
+
+                                <div class="input-info">
+                                    <label for="">Issue Status</label>
+                                    <select name="search_status" id="status">
+                                        <option value="" selected></option>
+                                        <option value="Borrowing">Borrowing</option>
+                                        <option value="Returned">Returned</option>
+                                        <option value="Expired">Expired</option>
+                                    </select>
+                                </div>
+
+                                <div class="apply-btn">
+                                    <input type="submit" value="Apply">
+                                    <ion-icon name="checkmark-sharp"></ion-icon>
+                                </div>
+                            </div>
+
+                            <div class="all-button">
+                                <button class="add-btn">
+                                    <ion-icon name="add-circle-outline"></ion-icon>
+                                    Add Issue Book
+                                </button>
+                                <button id="export-btn" class="export-btn">
+                                    <ion-icon name="share-sharp"></ion-icon>
+                                    Export
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- End: Search Box -->
+
+                    <!-- Begin: Table -->
+                    <div class="table-cus book">
+                        <table id="table-issue-book">
+                            <thead>
+                                <tr>
+                                    <th>Reader's Username</th>
+                                    <th>Book ID</th>
+                                    <th>Issue Date</th>
+                                    <th>Expired Date</th>
+                                    <th>Amount</th>
+                                    <th>Issue Status</th>
+                                    <th class="noExl">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <a href="">Show All</a>
+                    </div>
+                    <!-- End: Table -->
+                </aside>
+            </div>
+        </div>
+        <!-- Begin: Modal -->
+        <div class="container">
+            <div class="box-add add issue-book">
+                <h2>Add Issue Book</h2>
+                <form action="" method="POST">
+                    <div class="all-input">
+                        <div class="input-box">
+                            <label for="">Username</label>
+                            <input type="text" name="add_issue_username">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Book ID</label>
+                            <input type="text" name="add_issue_id">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Issue Date</label>
+                            <input type="text" name="add_issue_date">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Expired Date</label>
+                            <input type="text" name="add_issue_expired">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Amount</label>
+                            <input type="text" name="add_issue_amount">
+                        </div>
+                        <div class="submit-btn">
+                            <input type="submit" value="Submit" name="add_issue_submit">
+                        </div>
+                    </div>
+                </form>
+                <p class="noti-text"></p>
+            </div>
+            <div class="box-add edit issue-book">
+                <h2>Edit Issue Book</h2>
+                <form action="" method="POST">
+                    <div class="all-input">
+                        <div class="input-box">
+                            <label for="">Username</label>
+                            <input type="text" name="edit_issue_username">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Book ID</label>
+                            <input type="text" name="edit_issue_id">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Issue Date</label>
+                            <input type="text" name="edit_issue_date">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Expired Date</label>
+                            <input type="text" name="edit_issue_expired">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Amount</label>
+                            <input type="text" name="edit_issue_amount">
+                        </div>
+                        <div class="input-box">
+                            <label for="">Status</label>
+                            <div class="select-box">
+                                <select name="edit_issue_status">
+                                    <option value="" selected></option>
+                                    <option value="Borrowing">Borrowing</option>
+                                    <option value="Returned">Returned</option>
+                                    <option value="Expired">Expired</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="submit-btn">
+                            <input type="submit" value="Submit" name="edit_issue_submit">
+                        </div>
+                    </div>
+                </form>
+                <p class="noti-text"></p>
+            </div>
+        </div>
+        <!-- End: Modal -->
+        <!-- Logic -->
+        <script src='../../public/js/issue_books.js'></script>
+    </body>
+</html>
