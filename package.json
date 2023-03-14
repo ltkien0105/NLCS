@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "table2csv": "^1.1.6",
-    "table2excel": "^1.0.0"
+    "tableexport": "^5.2.0"
   }
 }

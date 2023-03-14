@@ -316,4 +316,6 @@ table td {
 }
 /* End: Modal */
 
-
+.btn-toolbar.bottom {
+    display: none;
+}

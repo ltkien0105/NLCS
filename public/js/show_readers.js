@@ -38,9 +38,24 @@ $("document").ready(function () {
         }
     }
 
+    var table, exportData;
     setTimeout(function() {
         loadDataToTable(data,1,5);
+
+        table = $("#table-reader").tableExport({
+            formats: ["xlsx"],
+            exportButtons: false,
+            ignoreCols: [6]
+        });
+
+        exportData = table.getExportData()['table-reader']["xlsx"];
     }, 100)
+
+    $('#export-btn').click(function(e) {
+        e.preventDefault();
+        console.log(exportData);
+        table.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension)
+    })
 
     showAllBtn.click(function(e) {
         e.preventDefault();
@@ -49,19 +64,13 @@ $("document").ready(function () {
             loadDataToTable(data, rowNumberCurrent+1, data.length)
         }
     })
-
-    var table2excel = new Table2Excel({
-        exclude: ".noExl",
-        name: "Worksheet name",
-        filename: "tablecus.xls",
-    });
-
-    document
-        .getElementById("export-btn")
-        .addEventListener("click", function (e) {
-            // e.preventDefault();
-            table2excel.export(document.querySelector("#table-reader"));
-        });
+    showAllBtn.click(function(e) {
+        e.preventDefault();
+        var rowNumberCurrent = $("tbody tr").length;
+        if(rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        }
+    })
 
     function showModal() {
         container.addClass("open");

@@ -16,12 +16,14 @@ $("document").ready(function () {
   const signUpAddress = $("input[name='signup-address']");
   const confirmPassword = $("input[name='confirm-password']");
 
-  toSignUpBtn.click(function () {
+  toSignUpBtn.click(function(e) {
+    e.preventDefault();
     signinBox.css("display", "none");
     signupBox.css("display", "block");
   });
 
-  backLogin.click(function () {
+  backLogin.click(function(e) {
+    e.preventDefault();
     signinBox.css("display", "block");
     signupBox.css("display", "none");
   });

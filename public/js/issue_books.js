@@ -14,7 +14,7 @@ $("document").ready(function () {
     const expiredDateEdit = $("input[name='edit_issue_expired']");
     const showAllBtn = $("#show-all");
     var data = {};
-    
+
     $.ajax({
         url: "../controller/books/IssueBooks.php",
         type: "get",
@@ -24,10 +24,10 @@ $("document").ready(function () {
     });
 
     function loadDataToTable(data, rowStart, rowEnd) {
-        if(rowEnd > data.length) {
+        if (rowEnd > data.length) {
             rowEnd = data.length;
         }
-        for(let row = (rowStart-1); row < rowEnd; row++) {
+        for (let row = rowStart - 1; row < rowEnd; row++) {
             $("tbody").append(`<tr>
                 <td>${data[row]["reader_username"]}</td>
                 <td>${data[row]["book_id"]}</td>
@@ -43,10 +43,24 @@ $("document").ready(function () {
         }
     }
 
+    var table, exportData;
     setTimeout(function() {
-        console.log(data);
         loadDataToTable(data,1,5);
+
+        table = $("#table-issue-book").tableExport({
+            formats: ["xlsx"],
+            exportButtons: false,
+            ignoreCols: [6]
+        });
+
+        exportData = table.getExportData()['table-issue-book']["xlsx"];
     }, 100)
+
+    $('#export-btn').click(function(e) {
+        e.preventDefault();
+        console.log(exportData);
+        table.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension)
+    })
 
     showAllBtn.click(function(e) {
         e.preventDefault();
@@ -55,6 +69,15 @@ $("document").ready(function () {
             loadDataToTable(data, rowNumberCurrent+1, data.length)
         }
     })
+
+    showAllBtn.click(function (e) {
+        e.preventDefault();
+        var rowNumberCurrent = $("tbody tr").length;
+        if (rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent + 1, data.length);
+        }
+    });
+
 
     issueDateSearch.datepicker({
         dateFormat: "dd/mm/yy",
@@ -104,19 +127,6 @@ $("document").ready(function () {
         selectOtherMonths: true,
     });
 
-    var table2excel = new Table2Excel({
-        exclude: ".noExl",
-        name: "Worksheet name",
-        filename: "tableissue.xls",
-    });
-
-    document
-        .getElementById("export-btn")
-        .addEventListener("click", function (e) {
-            // e.preventDefault();
-            table2excel.export(document.querySelector("#table-issue-book"));
-        });
-    
     function showModal() {
         container.addClass("open");
     }
@@ -265,10 +275,10 @@ $("document").ready(function () {
 
     applyBtn.click(function (e) {
         e.preventDefault();
-        const search_username = $('.search-box input[name="reader-username"]').val().trim();
-        const search_id = $('.search-box input[name="book-id"]')
+        const search_username = $('.search-box input[name="reader-username"]')
             .val()
             .trim();
+        const search_id = $('.search-box input[name="book-id"]').val().trim();
         const search_issueDate = $('.search-box input[name="issue-date"]')
             .val()
             .trim();
@@ -278,9 +288,7 @@ $("document").ready(function () {
         const search_amount = $('.search-box input[name="amount"]')
             .val()
             .trim();
-        const search_status = $(
-            '.search-box select[name="search_status"]'
-        )
+        const search_status = $('.search-box select[name="search_status"]')
             .val()
             .trim();
 
