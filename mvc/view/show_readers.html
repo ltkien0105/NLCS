@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/css/dashboard.css">
-    <link rel="stylesheet" href="../../public/css/show_page.css">
-    <!-- Add icon source -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <!-- Add jquery cdn -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/xlsx/dist/xlsx.core.min.js"></script>
-    <script src="../../node_modules/blobjs/Blob.js"></script>
-    <script src="../../node_modules/file-saverjs/FileSaver.js"></script>
-    <script src="../../node_modules/tableexport/dist/js/tableexport.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../public/css/dashboard.css" />
+        <link rel="stylesheet" href="../../public/css/show_page.css" />
+        <!-- Add icon source -->
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+        <!-- Add jquery cdn -->
+        <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../../node_modules/xlsx/dist/xlsx.core.min.js"></script>
+        <script src="../../node_modules/blobjs/Blob.js"></script>
+        <script src="../../node_modules/file-saverjs/FileSaver.js"></script>
+        <script src="../../node_modules/tableexport/dist/js/tableexport.js"></script>
 
-    <title>Reader</title>
-</head>
+        <title>Reader</title>
+    </head>
     <body>
         <div>
             <div class="main">
@@ -25,7 +31,10 @@
                 <div class="sidebar">
                     <div class="top-sidebar">
                         <div class="logo">
-                            <img src="../../public/assets/img/library-black-text.png" alt="">
+                            <img
+                                src="../../public/assets/img/library-black-text.png"
+                                alt=""
+                            />
                         </div>
                         <button class="close-btn">
                             <ion-icon name="close-sharp"></ion-icon>
@@ -74,12 +83,12 @@
                             <div class="all-input">
                                 <div class="input-info">
                                     <label for="">Username</label>
-                                    <input type="text" name="search_username">
+                                    <input type="text" name="search_username" />
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Full Name</label>
-                                    <input type="text" name="search_fullname">
+                                    <input type="text" name="search_fullname" />
                                 </div>
 
                                 <div class="input-info">
@@ -91,31 +100,36 @@
                                         <option value="Other">Other</option>
                                     </select>
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Email</label>
-                                    <input type="text" name="search_email">
+                                    <input type="text" name="search_email" />
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Address</label>
-                                    <input type="email" name="search_address">
+                                    <input type="email" name="search_address" />
                                 </div>
 
                                 <div class="input-info">
                                     <label for="">Phone Number</label>
-                                    <input type="text" name="search_phonenumber">
+                                    <input
+                                        type="text"
+                                        name="search_phonenumber"
+                                    />
                                 </div>
 
                                 <div class="apply-btn">
-                                    <input type="submit" value="Apply">
+                                    <input type="submit" value="Apply" />
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="all-button">
                                 <button class="add-btn">
-                                    <ion-icon name="add-circle-outline"></ion-icon>
+                                    <ion-icon
+                                        name="add-circle-outline"
+                                    ></ion-icon>
                                     Add Reader
                                 </button>
                                 <button id="export-btn" class="export-btn">
@@ -126,6 +140,41 @@
                         </form>
                     </div>
                     <!-- End: Search Box -->
+
+                    <!-- Begin: Sort -->
+                    <div class="sort-box">
+                        <div class="select-sort value">
+                            <p>Sort by:</p>
+                            <select name="sort-value" id="sort-value">
+                                <option name="username-sort" value="0">Username</option>
+                                <option name="fullname-sort" value="1">Full Name</option>
+                                <option name="gender-sort" value="2">
+                                    Gender
+                                </option>
+                                <option name="email-sort" value="3">
+                                    Email
+                                </option>
+                                <option name="address-sort" value="4">
+                                    Address
+                                </option>
+                                <option name="phonenumber-sort" value="5">
+                                    Phone Number
+                                </option>
+                            </select>
+                        </div>
+                        <div class="select-sort order">
+                            <p>Order by :</p>
+                            <select name="sort-order" id="sort-order">
+                                <option name="asc-sort" value="asc">
+                                    Ascending
+                                </option>
+                                <option name="des-sort" value="des">
+                                    Descending
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End: Sort -->
 
                     <!-- Begin: Table -->
                     <div class="table-cus">
@@ -143,7 +192,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <a id="show-all"href="">Show All</a>
+                        <a id="show-all" href="">Show All</a>
                     </div>
                     <!-- End: Table -->
                 </aside>
@@ -157,21 +206,23 @@
                     <div class="all-input">
                         <div class="input-box">
                             <label for="">Username</label>
-                            <input type="text" name="username">
+                            <input type="text" name="username" />
                         </div>
                         <div class="input-box">
                             <label for="">Password</label>
-                            <input type="password" name="password">
+                            <input type="password" name="password" />
                         </div>
                         <div class="input-box">
                             <label for="">Full name</label>
-                            <input type="text" name="fullname">
+                            <input type="text" name="fullname" />
                         </div>
                         <div class="input-box">
                             <label for="">Gender</label>
                             <div class="select-box">
                                 <select name="gender">
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" disabled selected>
+                                        Select
+                                    </option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
@@ -180,18 +231,22 @@
                         </div>
                         <div class="input-box">
                             <label for="">Email</label>
-                            <input type="text" name="email">
+                            <input type="text" name="email" />
                         </div>
                         <div class="input-box">
                             <label for="">Address</label>
-                            <input type="text" name="address">
+                            <input type="text" name="address" />
                         </div>
                         <div class="input-box">
                             <label for="">Phone number</label>
-                            <input type="text" name="phonenumber">
+                            <input type="text" name="phonenumber" />
                         </div>
                         <div class="submit-btn">
-                            <input type="submit" value="Submit" name="add_reader_submit">
+                            <input
+                                type="submit"
+                                value="Submit"
+                                name="add_reader_submit"
+                            />
                         </div>
                     </div>
                 </form>
@@ -201,16 +256,18 @@
                 <h2>Edit User</h2>
                 <form action="" method="POST">
                     <div class="all-input">
-                        <input type="hidden" name="username">
+                        <input type="hidden" name="username" />
                         <div class="input-box">
                             <label for="">Full name</label>
-                            <input type="text" name="fullname">
+                            <input type="text" name="fullname" />
                         </div>
                         <div class="input-box">
                             <label for="">Gender</label>
                             <div class="select-box">
                                 <select name="gender">
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" disabled selected>
+                                        Select
+                                    </option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Other">Other</option>
@@ -219,18 +276,22 @@
                         </div>
                         <div class="input-box">
                             <label for="">Email</label>
-                            <input type="text" name="email">
+                            <input type="text" name="email" />
                         </div>
                         <div class="input-box">
                             <label for="">Address</label>
-                            <input type="text" name="address">
+                            <input type="text" name="address" />
                         </div>
                         <div class="input-box">
                             <label for="">Phone number</label>
-                            <input type="text" name="phonenumber">
+                            <input type="text" name="phonenumber" />
                         </div>
                         <div class="submit-btn">
-                            <input type="submit" value="Submit" name="edit_reader_submit">
+                            <input
+                                type="submit"
+                                value="Submit"
+                                name="edit_reader_submit"
+                            />
                         </div>
                     </div>
                 </form>
@@ -242,4 +303,4 @@
 </html>
 
 <!-- Logic -->
-<script src='../../public/js/show_readers.js'></script>
+<script src="../../public/js/show_readers.js"></script>

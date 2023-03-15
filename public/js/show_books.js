@@ -8,7 +8,7 @@ $("document").ready(function () {
     const applyBtn = $(".apply-btn");
     const showAllBtn = $("#show-all");
     var data = {};
-    
+
     $.ajax({
         url: "../controller/books/Books.php",
         type: "get",
@@ -18,10 +18,10 @@ $("document").ready(function () {
     });
 
     function loadDataToTable(data, rowStart, rowEnd) {
-        if(rowEnd > data.length) {
+        if (rowEnd > data.length) {
             rowEnd = data.length;
         }
-        for(let row = (rowStart-1); row < rowEnd; row++) {
+        for (let row = rowStart - 1; row < rowEnd; row++) {
             $("tbody").append(`<tr>
                 <td>${data[row]["book_id"]}</td>
                 <td>${data[row]["book_name"]}</td>
@@ -38,31 +38,36 @@ $("document").ready(function () {
     }
 
     var table, exportData;
-    setTimeout(function() {
-        loadDataToTable(data,1,5);
+    setTimeout(function () {
+        loadDataToTable(data, 1, 5);
 
         table = $("#table-book").tableExport({
             formats: ["xlsx"],
             exportButtons: false,
-            ignoreCols: [6]
+            ignoreCols: [6],
         });
 
-        exportData = table.getExportData()['table-book']["xlsx"];
-    }, 100)
+        exportData = table.getExportData()["table-book"]["xlsx"];
+    }, 100);
 
-    $('#export-btn').click(function(e) {
+    $("#export-btn").click(function (e) {
         e.preventDefault();
         console.log(exportData);
-        table.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension)
-    })
+        table.export2file(
+            exportData.data,
+            exportData.mimeType,
+            exportData.filename,
+            exportData.fileExtension
+        );
+    });
 
-    showAllBtn.click(function(e) {
+    showAllBtn.click(function (e) {
         e.preventDefault();
         var rowNumberCurrent = $("tbody tr").length;
-        if(rowNumberCurrent < data.length) {
-            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        if (rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent + 1, data.length);
         }
-    })
+    });
 
     function showModal() {
         container.addClass("open");
@@ -261,4 +266,68 @@ $("document").ready(function () {
                 });
         });
     });
+
+    //Sort
+    function sortTable(columnIndex, order) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = $('#table-book');
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.find("tbody tr");
+            for (i = 0; i < rows.length; i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+                if(columnIndex == 5) {
+                    const splashPosX = x.innerHTML.indexOf("/");
+                    const totalAmountX = x
+                        .innerHTML
+                        .slice(splashPosX + 1);
+                    const splashPosY = y.innerHTML.indexOf("/");
+                    const totalAmountY = y
+                        .innerHTML
+                        .slice(splashPosY + 1);
+                    if(order == "asc") {
+                        if(totalAmountX > totalAmountY) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }    
+                    else if(order == "des") {
+                        if(totalAmountX < totalAmountY) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                else{
+                    if(order == "asc") {
+                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }    
+                    else if(order == "des") {
+                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    $('#sort-value').change(function() {
+        sortTable($(this).val(), $('#sort-order').val());
+    })
+    
+    $('#sort-order').change(function() {
+        sortTable($('#sort-value').val(), $(this).val());
+    })
 });

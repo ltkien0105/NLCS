@@ -319,3 +319,24 @@ table td {
 .btn-toolbar.bottom {
     display: none;
 }
+
+/* Sort */
+.sort-box {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    margin-top: 2em;
+}
+
+.sort-box .select-sort {
+    height: 100%;
+    width: 160px;
+    display: column;
+}
+
+.sort-box .select-sort select{
+    width: 100%;
+    height: 50%;
+    font-size: 1.1em;
+}

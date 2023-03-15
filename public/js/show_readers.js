@@ -259,4 +259,44 @@ $("document").ready(function () {
                 
         });
     });
+
+    //Sort
+    function sortTable(columnIndex, order) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = $('#table-reader');
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.find("tbody tr");
+            for (i = 0; i < rows.length; i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+                if(order == "asc") {
+                    if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }    
+                else if(order == "des") {
+                    if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    $('#sort-value').change(function() {
+        sortTable($(this).val(), $('#sort-order').val());
+    })
+    
+    $('#sort-order').change(function() {
+        sortTable($('#sort-value').val(), $(this).val());
+    })
 });

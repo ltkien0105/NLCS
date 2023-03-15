@@ -321,4 +321,69 @@ $("document").ready(function () {
                 });
         });
     });
+
+    //Sort
+    function sortTable(columnIndex, order) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = $('#table-issue-book');
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.find("tbody tr");
+            for (i = 0; i < rows.length; i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+                if(columnIndex == 2 || columnIndex == 3) {
+                    const dayX = x.innerHTML.split("/")[0];
+                    const monthX = x.innerHTML.split("/")[1];
+                    const yearX = x.innerHTML.split("/")[2];
+
+                    const dayY = y.innerHTML.split("/")[0];
+                    const monthY = y.innerHTML.split("/")[1];
+                    const yearY = y.innerHTML.split("/")[2];
+                    
+                    const dateX = new Date(yearX, monthX, dayX);
+                    const dateY = new Date(yearY, monthY, dayY);
+                    if(order == "asc") {
+                        if(dateX > dateY) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }    
+                    else if(order == "des") {
+                        if(dateX < dateY) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                } else {
+                    if(order == "asc") {
+                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }    
+                    else if(order == "des") {
+                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    $('#sort-value').change(function() {
+        sortTable($(this).val(), $('#sort-order').val());
+    })
+    
+    $('#sort-order').change(function() {
+        sortTable($('#sort-value').val(), $(this).val());
+    })
 });

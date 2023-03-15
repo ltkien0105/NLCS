@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/css/dashboard.css">
-    <link rel="stylesheet" href="../../public/css/show_page.css">
-    <!-- Add icon source -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <!-- Add jquery cdn -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/xlsx/dist/xlsx.core.min.js"></script>
-    <script src="../../node_modules/blobjs/Blob.js"></script>
-    <script src="../../node_modules/file-saverjs/FileSaver.js"></script>
-    <script src="../../node_modules/tableexport/dist/js/tableexport.js"></script>
-    <title>Books</title>
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../public/css/dashboard.css" />
+        <link rel="stylesheet" href="../../public/css/show_page.css" />
+        <!-- Add icon source -->
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+        <!-- Add jquery cdn -->
+        <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../../node_modules/xlsx/dist/xlsx.core.min.js"></script>
+        <script src="../../node_modules/blobjs/Blob.js"></script>
+        <script src="../../node_modules/file-saverjs/FileSaver.js"></script>
+        <script src="../../node_modules/tableexport/dist/js/tableexport.js"></script>
+        <title>Books</title>
+    </head>
     <body>
         <div>
             <div class="main">
@@ -24,7 +30,10 @@
                 <div class="sidebar">
                     <div class="top-sidebar">
                         <div class="logo">
-                            <img src="../../public/assets/img/library-black-text.png" alt="">
+                            <img
+                                src="../../public/assets/img/library-black-text.png"
+                                alt=""
+                            />
                         </div>
                         <button class="close-btn">
                             <ion-icon name="close-sharp"></ion-icon>
@@ -73,43 +82,48 @@
                             <div class="all-input">
                                 <div class="input-info">
                                     <label for="">ID</label>
-                                    <input type="text" name="book_id">
+                                    <input type="text" name="book_id" />
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Name</label>
-                                    <input type="text" name="book_name">
+                                    <input type="text" name="book_name" />
                                 </div>
 
                                 <div class="input-info">
                                     <label for="">Author</label>
-                                    <input type="text" name="book_author">
+                                    <input type="text" name="book_author" />
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Publisher</label>
-                                    <input type="text" name="book_publisher">
+                                    <input type="text" name="book_publisher" />
                                 </div>
-        
+
                                 <div class="input-info">
                                     <label for="">Category</label>
-                                    <input type="text" name="book_category">
+                                    <input type="text" name="book_category" />
                                 </div>
 
                                 <div class="input-info">
                                     <label for="">Total Amount</label>
-                                    <input type="text" name="book_total_amount">
+                                    <input
+                                        type="text"
+                                        name="book_total_amount"
+                                    />
                                 </div>
 
                                 <div class="apply-btn">
-                                    <input type="submit" value="Apply">
+                                    <input type="submit" value="Apply" />
                                     <ion-icon name="checkmark-sharp"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="all-button">
                                 <button class="add-btn">
-                                    <ion-icon name="add-circle-outline"></ion-icon>
+                                    <ion-icon
+                                        name="add-circle-outline"
+                                    ></ion-icon>
                                     Add Book
                                 </button>
                                 <button id="export-btn" class="export-btn">
@@ -120,6 +134,41 @@
                         </form>
                     </div>
                     <!-- End: Search Box -->
+
+                    <!-- Begin: Sort -->
+                    <div class="sort-box">
+                        <div class="select-sort value">
+                            <p>Sort by:</p>
+                            <select name="sort-value" id="sort-value">
+                                <option name="id-sort" value="0">ID</option>
+                                <option name="name-sort" value="1">Name</option>
+                                <option name="author-sort" value="2">
+                                    Author
+                                </option>
+                                <option name="publisher-sort" value="3">
+                                    Publisher
+                                </option>
+                                <option name="category-sort" value="4">
+                                    Category
+                                </option>
+                                <option name="amount-sort" value="5">
+                                    Amount
+                                </option>
+                            </select>
+                        </div>
+                        <div class="select-sort order">
+                            <p>Order by :</p>
+                            <select name="sort-order" id="sort-order">
+                                <option name="asc-sort" value="asc">
+                                    Ascending
+                                </option>
+                                <option name="des-sort" value="des">
+                                    Descending
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End: Sort -->
 
                     <!-- Begin: Table -->
                     <div class="table-cus book">
@@ -151,26 +200,30 @@
                     <div class="all-input">
                         <div class="input-box">
                             <label for="">Name</label>
-                            <input type="text" name="add_book_name">
+                            <input type="text" name="add_book_name" />
                         </div>
                         <div class="input-box">
                             <label for="">Author</label>
-                            <input type="text" name="add_book_author">
+                            <input type="text" name="add_book_author" />
                         </div>
                         <div class="input-box">
                             <label for="">Publisher</label>
-                            <input type="text" name="add_book_publisher">
+                            <input type="text" name="add_book_publisher" />
                         </div>
                         <div class="input-box">
                             <label for="">Category</label>
-                            <input type="text" name="add_book_category">
+                            <input type="text" name="add_book_category" />
                         </div>
                         <div class="input-box">
                             <label for="">Total amount</label>
-                            <input type="text" name="add_book_total_amount">
+                            <input type="text" name="add_book_total_amount" />
                         </div>
                         <div class="submit-btn">
-                            <input type="submit" value="Submit" name="add_book_submit">
+                            <input
+                                type="submit"
+                                value="Submit"
+                                name="add_book_submit"
+                            />
                         </div>
                     </div>
                 </form>
@@ -180,29 +233,33 @@
                 <h2>Edit Book</h2>
                 <form action="" method="POST">
                     <div class="all-input">
-                        <input type="hidden" name="edit_book_id">
+                        <input type="hidden" name="edit_book_id" />
                         <div class="input-box">
                             <label for="">Name</label>
-                            <input type="text" name="edit_book_name">
+                            <input type="text" name="edit_book_name" />
                         </div>
                         <div class="input-box">
                             <label for="">Author</label>
-                            <input type="text" name="edit_book_author">
+                            <input type="text" name="edit_book_author" />
                         </div>
                         <div class="input-box">
                             <label for="">Publisher</label>
-                            <input type="text" name="edit_book_publisher">
+                            <input type="text" name="edit_book_publisher" />
                         </div>
                         <div class="input-box">
                             <label for="">Category</label>
-                            <input type="text" name="edit_book_category">
+                            <input type="text" name="edit_book_category" />
                         </div>
                         <div class="input-box">
                             <label for="">Amount book added</label>
-                            <input type="text" name="edit_amount_added">
+                            <input type="text" name="edit_amount_added" />
                         </div>
                         <div class="submit-btn">
-                            <input type="submit" value="Submit" name="edit_book_submit">
+                            <input
+                                type="submit"
+                                value="Submit"
+                                name="edit_book_submit"
+                            />
                         </div>
                     </div>
                 </form>
@@ -211,6 +268,6 @@
         </div>
         <!-- End: Modal -->
         <!-- Logic -->
-        <script src='../../public/js/show_books.js'></script>
+        <script src="../../public/js/show_books.js"></script>
     </body>
 </html>
