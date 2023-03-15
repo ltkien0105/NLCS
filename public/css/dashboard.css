@@ -49,7 +49,7 @@ body {
 
 .main {
     display: grid;
-    grid-template-columns: 14rem auto 23rem;
+    grid-template-columns: 14rem auto;
     margin: 0 0;
     gap: 1.8em;
     width: 98vw;
@@ -192,7 +192,7 @@ body.dark-theme-variables .top-sidebar .close-btn{
 
 .dashboard .insights {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.4em;
 }
 
@@ -203,6 +203,8 @@ body.dark-theme-variables .top-sidebar .close-btn{
     margin-top: 0.8em;
     box-shadow: 0 1.8em 2.8em var(--color-light);
     transition: all 0.3s ease;
+    display: grid;
+    grid-template-columns: 30% 70%;
 }
 
 .dashboard .insights > div:hover {
@@ -211,17 +213,18 @@ body.dark-theme-variables .top-sidebar .close-btn{
 
 .dashboard .insights > div ion-icon {
     background-color: var(--color-primary);
-    padding: 0.2em;
+    padding: 0.6em;
     border-radius: 50%;
     color: var(--color-white);
     font-size: 2em;
+    margin-top: 20px;
 }
 
-.dashboard .insights > div.expenses ion-icon {
+.dashboard .insights > div.reader ion-icon {
     background-color: var(--color-danger);
 }
 
-.dashboard .insights > div.income ion-icon {
+.dashboard .insights > div.issue-book ion-icon {
     background-color: var(--color-success);
 }
 
@@ -230,73 +233,17 @@ body.dark-theme-variables .top-sidebar .close-btn{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .dashboard .insights h3 {
     margin: 1em 0 1em;
     font-size: 1em;
+    font-weight: 400;
 }
 
 .dashboard .insights h1 {
     margin-bottom: 1em;
-}
-
-.dashboard .insights .progress {
-    position: relative;
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-}
-
-.dashboard .insights svg {
-    width: 7rem;
-    height: 7rem;
-}
-
-.dashboard .insights svg circle {
-    fill: none;
-    stroke: var(--color-primary);
-    stroke-width: 14;
-    stroke-linecap: round;
-    stroke-dasharray: 226;
-    transform: translate(5px, 5px);
-    /* animation: dash 10s linear alternate; */
-}
-
-/* @keyframes dash {
-    from {
-        stroke-dashoffset: 226;
-    }
-    to {
-        stroke-dashoffset: var(--offset);
-    }
-} */
-
-.insights .sales svg circle {
-    stroke-dasharray: 226;
-    stroke-dashoffset: calc(226 - (226 * 81 / 100));
-}
-
-.insights .expenses svg circle {
-    stroke-dasharray: 226;
-    stroke-dashoffset: calc(226 - (226 * 62 / 100));
-}
-
-.insights .income svg circle {
-    stroke-dasharray: 226;
-    stroke-dashoffset: calc(226 - (226 * 44 / 100));
-}
-
-.insights .progress .number {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .insights .text-muted {
@@ -304,12 +251,19 @@ body.dark-theme-variables .top-sidebar .close-btn{
     margin-top: 2em;
 }
 
-/* ================ Begin: Recent Orders ================*/
-.recent-order {
+/* ================ Begin: New Information ================*/
+.new-infor {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2em
+}
+
+
+.new {
     margin-top: 2em;
 }
 
-.recent-order h2 {
+.new h2 {
     color: var(--color-dark);
     margin-bottom: 0.8em;
 }
@@ -322,6 +276,7 @@ table {
     text-align: center;
     box-shadow: 0 2em 3em var(--color-light);
     transition: all 0.3s ease;
+    border-spacing: 1em;
 }
 
 table:hover {
@@ -342,171 +297,13 @@ table tbody tr:last-child td {
     border: none;
 }
 
-.recent-order a {
+.new a {
     text-align: center;
     display: block;
     margin: 1em auto;
     color: var(--color-primary);
 }
 /* ================ End: Recent Orders ================*/
-
-/* ================ Begin: Right ================*/
-.right {
-    margin-top: 1.4em;
-}
-
-.right .top {
-    display: flex;
-    justify-content: end;
-    gap: 2em;
-}
-
-.right .top button {
-    display: none;;
-}
-
-.right .theme-toggler {
-    background-color: var(--color-light);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 1.6em;
-    width: 4.2em;
-    cursor: pointer;
-    border-radius: 0.4em;
-}
-
-.right .theme-toggler ion-icon {
-    font-size: 1.2em;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.right .theme-toggler ion-icon[name='sunny-sharp'] {
-    color: white;
-}
-
-.right .theme-toggler ion-icon.active {
-    background-color: var(--color-primary);
-    color: #fff;
-    border-radius: 0.4em;
-}
-
-.right .top .profile {
-    display: flex;
-    gap: 2em;
-    text-align: right;
-}
-
-/* ================ Begin: Recent Updates ================ */
-
-.right .recent-updates {
-    margin-top: 0.8em;
-}
-
-.right .recent-updates h2 {
-    color: var(--color-dark);
-    margin-bottom: 0.8em;
-}
-
-.right .recent-updates .update-list {
-    background-color: var(--color-white);
-    padding: 1.8em;
-    border-radius: 2em;
-    box-shadow: 0 2em 3em var(--color-light);
-    transition: all 0.3s ease;
-}
-
-.right .recent-updates .update-list:hover {
-    box-shadow: none;
-}
-
-.right .recent-updates .update-list .update {
-    color: var(--color-dark);
-    display: grid;
-    grid-template-columns: 2.6em auto;
-    gap: 1em;
-    margin-bottom: 1em;
-}
-
-/* ================ BEGIN: SALES ANALYTICS ================*/
-
-.right .sales-analytics {
-    margin-top: 2em;
-
-}
-
-.right .sales-analytics h2 {
-    color: var(--color-dark);
-    margin-bottom: 0.8em;
-}
-
-.right .sales-analytics .item {
-    background-color: var(--color-white);
-    display: flex;
-    align-items: center;
-    gap: 1em;
-    margin-bottom: 0.7em;
-    padding: 1.4em 1.8em;
-    border-radius: 1.2em;
-    box-shadow: 0 2em 3em var(--color-light);
-    transition: all 0.3s ease;
-}
-
-.right .sales-analytics .item:hover {
-    box-shadow: none;
-}
-
-.right .sales-analytics .item .icon {
-    padding: 0.6em;
-    color: var(--color-white);
-    border-radius: 50%;
-    background-color: var(--color-primary);
-    display: flex;
-}
-
-.right .sales-analytics .item .right-sales {
-    color: var(--color-dark);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-    width: 100%;
-}
-
-.right .sales-analytics .item.offline .icon{
-    background-color: var(--color-danger);
-}
-
-.right .sales-analytics .item.customers .icon{
-    background-color: var(--color-success);
-}
-
-.right .sales-analytics .add-product {
-    background-color: transparent;
-    border: 2px dashed var(--color-primary);
-    color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.right .sales-analytics .add-product div {
-    display: flex;
-    align-items: center;
-    gap: 0.6em;
-}
-
-.right .sales-analytics .add-product div h3 {
-    font-weight: 500;
-}
-
-/* ================ END: SALES ANALYTICS ================*/
-
-/* ================ End: Right ================*/
 /* ================= End: Dashboard ================= */
 
 /* ================= Begin: Media Queries ================= */
@@ -535,7 +332,7 @@ table tbody tr:last-child td {
         gap: 0;
     } 
 
-    .dashboard .recent-order {
+    .dashboard .new {
         position: absolute;
         width: 94%;
         left: 50%;
@@ -543,7 +340,7 @@ table tbody tr:last-child td {
         margin: 6em 0 0 8.8em;
     }
 
-    .dashboard .recent-order table {
+    .dashboard .new table {
         width: 82vw;
     }
 }
@@ -618,77 +415,32 @@ table tbody tr:last-child td {
         transform: translateX(3%);
     }
 
-    .dashboard .recent-order {
+    .dashboard .new {
         position: relative;
         margin: 3em 0 0 0;
         width: 100%;
     }
 
-    .dashboard .recent-order table {
+    .dashboard .new table {
         width: 100%;
         transform: translateX(2%);
     }
 
-    .dashboard .recent-order table thead tr th:last-child {
+    .dashboard .new table thead tr th:last-child {
         display: none;
     }
 
-    .dashboard .recent-order table tbody tr td:last-child {
+    .dashboard .new table tbody tr td:last-child {
         display: none;
     }
+}
 
-    .right {
-        width: 94%;
-        margin: 1em auto;
-    }
+.date {
+    width: 18%;
+    display: flex;
+    flex-direction: row;
+}
 
-    .right .top {
-        position: fixed;
-        top: 0;
-        left: 0;
-        align-items: center;
-        padding: 0 0.8em;
-        height: 4.6em;
-        background-color: var(--color-white);
-        width: 100%;
-        box-shadow: 0 1em 1em var(--color-light);
-        z-index: 1;
-    }
-
-    .right .top .dark-theme-variables {
-        background-color: var(--color-white);
-    }
-
-    .right .top .dark-theme-variables .info {
-        color: white;
-    }
-
-    .right .top .theme-toggler {
-        width: 4.4em;
-        position: absolute;
-        right: 55%;
-    }
-
-    .right .top .profile {
-        gap: 1em;
-    }
-
-    .right .top button {
-        position: absolute;
-        display: inline-block;
-        background-color: transparent;
-        cursor: pointer;
-        border: none;
-        left: 1em;
-    }
-
-    .right .top button ion-icon {
-        font-size: 2em;
-    }
-
-    .right .recent-updates,
-    .right .sales-analytics {
-        width: 96%;
-        transform: translateX(4%);
-    }
+.date img {
+    transform: translate(60%, 10%);
 }

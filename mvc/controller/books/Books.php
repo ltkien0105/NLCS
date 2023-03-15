@@ -28,7 +28,7 @@
         }
     } elseif(isset($_POST['bookIdDelete'])) {
         $id = $_POST['bookIdDelete'];
-        $db->deleteIssueBookByBookId($id);
+        // $db->deleteIssueBookByBookId($id);
         $db->deleteBook($id);
     } else {
         $table = "books";

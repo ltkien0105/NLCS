@@ -3,7 +3,7 @@
         private $hostname = 'localhost';
         private $username = 'root';
         private $pass = '';
-        private $dbname = 'nlcs';
+        private $dbname = 'id20377600_nlcs_db';
 
         private $conn = NULL;
         private $result = NULL;
@@ -76,7 +76,7 @@
         // ------------ Readers ------------
         //Add reader's data
         public function insertReader($username, $fullname, $gender, $email, $address, $phonenumber) {
-            $sql = "INSERT INTO readers(reader_username, reader_fullname, reader_gender, reader_email, reader_address, reader_phonenumber)
+            $sql = "INSERT INTO readers
              VALUE('$username', '$fullname', '$gender', '$email', '$address', '$phonenumber')";
             return $this->execute($sql);
         }
@@ -95,11 +95,38 @@
             return $this->execute($sql);
         }
 
+        //Get Reader's Count
+        public function getCountReaders() {
+            $sql = "SELECT count(reader_username) as count_reader FROM readers";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
+        //Get new reader
+        public function getNewReaders() {
+            $sql = "SELECT reader_username, reader_fullname, reader_phonenumber 
+                    FROM readers r INNER JOIN accounts a ON r.reader_username = a.username
+                    ORDER BY create_time DESC LIMIT 10";
+            $this->execute($sql);
+            if($this->count_num_rows() == 0) {
+                $data = 0;
+            } else {
+                while ($datas = $this->getData()) {
+                    $data[] = $datas;
+                }
+            }
+            return $data;
+        }
         // ------------ Books ------------
         //Add book's data
         public function insertBook($name, $author, $publisher, $category, $total_amount) {
-            $sql = "INSERT INTO books(book_name, book_author, book_publisher, book_category, book_total_amount, book_remaining_amount)
-             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount')";
+            $sql = "INSERT INTO books
+             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount', 'now()')";
             return $this->execute($sql);
         }
         
@@ -130,10 +157,39 @@
             return $data;
         }
 
+        //Search book
         public function searchBook($id = '', $name = '', $author = '', $publisher = '', $category = '', $total_amount= '') {
             $sql = "SELECT * FROM books WHERE ((book_id LIKE '%$id%') AND (book_name LIKE '%$name%') 
                                             AND (book_author LIKE '%$author%') AND (book_publisher LIKE '%$publisher%') 
                                             AND (book_category LIKE '%$category%') AND (book_total_amount LIKE '%$total_amount%'))";
+            $this->execute($sql);
+            if($this->count_num_rows() == 0) {
+                $data = 0;
+            } else {
+                while ($datas = $this->getData()) {
+                    $data[] = $datas;
+                }
+            }
+            return $data;
+        }
+
+        //Get Books's Count
+        public function getCountBooks() {
+            $sql = "SELECT count(book_id) as count_book FROM books";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
+        //Get new book
+        public function getNewBooks() {
+            $sql = "SELECT book_id, book_name, book_author 
+                    FROM books
+                    ORDER BY book_create_time DESC LIMIT 10";
             $this->execute($sql);
             if($this->count_num_rows() == 0) {
                 $data = 0;
@@ -185,9 +241,21 @@
             return $data;
         }
 
+        //Get Books's Count
+        public function getCountIssueBooks() {
+            $sql = "SELECT count(reader_username) as count_issue_book FROM issue_books";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
         // ------------ Accounts ------------
         public function insertAccount($username, $password, $role="reader") {
-            $sql = "INSERT INTO accounts VALUES('$username', '$password', '$role')";
+            $sql = "INSERT INTO accounts VALUES('$username', '$password', '$role', now())";
             return $this->execute($sql);
         }
 
@@ -199,6 +267,17 @@
         public function deleteAccount($username) {
             $sql = "DELETE FROM accounts WHERE username = '$username'";
             return $this->execute($sql);
+        }
+
+        public function getCountAccountCreateToday() {
+            $sql = "SELECT COUNT(create_time) as count_reader_create_today FROM accounts WHERE DATE(create_time) = curdate()";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
         }
     }
 

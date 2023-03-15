@@ -3,7 +3,7 @@
     $db = new Database();
     $db->connect();
     
-    if(isset($_POST['signupUsername'])) {
+    if(isset($_POST['signUpUsername'])) {
         $signUpUsername = $_POST['signUpUsername'];
         $signUpPassword = $_POST['signUpPassword'];
         $signUpFullname = $_POST['signUpFullname'];
