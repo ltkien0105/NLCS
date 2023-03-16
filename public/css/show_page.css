@@ -221,11 +221,19 @@ table td {
 }
 
 .box-add.add.issue-book {
-    height: 65%;
+    width: 60%;
+    height: 95%;
 }
 
 .box-add.edit.issue-book {
-    height: 70%;
+    width: 60%;
+    height: 95%;
+}
+
+.show{
+    width: 10%;
+    height: 100%;
+    border: 1px solid #000;
 }
 
 .box-add select {
@@ -262,6 +270,13 @@ table td {
     justify-content: space-between;
 }
 
+.box-add.issue-book .input-box {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 35% 40%;
+    gap: 1em;
+}
+
 .box-add .input-box label {
     transform: translateY(10%);
 }
@@ -269,6 +284,38 @@ table td {
 .box-add .input-box input,
 .box-add .input-box .select-box {
     width: 60%;
+}
+
+.box-add.issue-book input {
+    width: 100%;
+}
+
+.box-add.issue-book input[name="add_issue_username"],
+.box-add.issue-book input[name="add_issue_id"],
+.box-add.issue-book input[name="edit_issue_username"],
+.box-add.issue-book input[name="edit_issue_id"] {
+    height: 25%
+}
+
+.box-add.issue-book .input-box .show {
+    width: 100%;
+    display: none;
+}
+
+.box-add.issue-book .input-box .show.reader,
+.box-add.issue-book .input-box .show.book {
+    padding: 4px;
+    display: block
+}
+
+.box-add.issue-book label {
+    text-align: end;
+}
+
+.box-add.issue-book p {
+    font-size: 0.8em;
+    font-weight: 400;
+    margin-top: 0;
 }
 
 .box-add .input-box input {

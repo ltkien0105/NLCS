@@ -434,13 +434,3 @@ table tbody tr:last-child td {
         display: none;
     }
 }
-
-.date {
-    width: 18%;
-    display: flex;
-    flex-direction: row;
-}
-
-.date img {
-    transform: translate(60%, 10%);
-}

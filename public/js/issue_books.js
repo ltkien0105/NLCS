@@ -20,6 +20,7 @@ $("document").ready(function () {
         type: "get",
         success: function (response) {
             data = JSON.parse(response);
+            console.log(data);
         },
     });
 
@@ -385,5 +386,45 @@ $("document").ready(function () {
     
     $('#sort-order').change(function() {
         sortTable($('#sort-value').val(), $(this).val());
+    })
+
+    $('.edit-issue-username').input(function() {
+        $.ajax({
+            url: "../controller/readers/Readers.php",
+            type: 'post',
+            values: {'edit_reader_username': $(this).val()},
+            success: function(data) {
+                const response = JSON.parse(data);
+                console.log(response);
+                $('.show.reader').append(
+                    `<p>Username: ${response[0]['reader_username']}</p>
+                    <p>Full Name: ${response[0]['reader_fullname']}</p>
+                    <p>Gender: ${response[0]['reader_gender']}</p>
+                    <p>Email: ${response[0]['reader_email']}</p>
+                    <p>Address: ${response[0]['reader_address']}</p>
+                    <p>Phone Number; ${response[0]['reader_phonenumber']}</p>`
+                );
+            }
+        })
+    })
+    
+    $('.edit-issue-id').input(function() {
+        $.ajax({
+            url: "../controller/books/Books.php",
+            type: 'post',
+            values: {'edit_book_id': $(this).val()},
+            success: function(data) {
+                const response = JSON.parse(data);
+                console.log(response);
+                $('.show.book').append(
+                    `<p>ID: ${response[0]['book_id']}</p>
+                    <p>Name: ${response[0]['book_name']}</p>
+                    <p>Author: ${response[0]['book_author']}</p>
+                    <p>Publisher: ${response[0]['book_publisher']}</p>
+                    <p>Category; ${response[0]['book_category']}</p>
+                    <p>Amount: ${response[0]['book_remaining_amount']}/${response[0]['book_total_amount']}</p>`
+                );
+            }
+        })
     })
 });
