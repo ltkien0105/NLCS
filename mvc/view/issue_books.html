@@ -209,29 +209,39 @@
                 <h2>Add Issue Book</h2>
                 <form action="" method="POST">
                     <div class="all-input">
-                        <div class="input-box">
-                            <label for="">Username</label>
-                            <input type="text" name="add_issue_username" />
-                            <div class="show reader"></div>
+                        <div class="input-box username">
+                            <div class="left">
+                                <label for="">Username</label>
+                                <input type="text" name="add_issue_username" />
+                            </div>
+                            <div class="show add reader"></div>
+                        </div>
+                        <div class="input-box id">
+                            <div class="left">
+                                <label for="">Book ID</label>
+                                <input type="text" name="add_issue_id" />
+                            </div>
+                            <div class="show add book"></div>
                         </div>
                         <div class="input-box">
-                            <label for="">Book ID</label>
-                            <input type="text" name="add_issue_id" />
-                            <div class="show book"></div>
-                        </div>
-                        <div class="input-box">
-                            <label for="">Issue Date</label>
-                            <input type="text" name="add_issue_date" />
+                            <div class="left">
+                                <label for="">Issue Date</label>
+                                <input type="text" name="add_issue_date" />
+                            </div>
                             <div class="show"></div>
                         </div>
                         <div class="input-box">
-                            <label for="">Expired Date</label>
-                            <input type="text" name="add_issue_expired" />
+                            <div class="left">
+                                <label for="">Expired Date</label>
+                                <input type="text" name="add_issue_expired" />
+                            </div>
                             <div class="show"></div>
                         </div>
                         <div class="input-box">
-                            <label for="">Amount</label>
-                            <input type="text" name="add_issue_amount" />
+                            <div class="left">
+                                <label for="">Amount</label>
+                                <input type="text" name="add_issue_amount" />
+                            </div>
                             <div class="show"></div>
                         </div>
                         <div class="submit-btn">
@@ -245,19 +255,17 @@
                 </form>
                 <p class="noti-text"></p>
             </div>
-            <div class="box-add edit issue-book">
+            <div class="box-add edit">
                 <h2>Edit Issue Book</h2>
                 <form action="" method="POST">
                     <div class="all-input">
                         <div class="input-box">
                             <label for="">Username</label>
                             <input type="text" name="edit_issue_username" />
-                            <div class="show reader"></div>
                         </div>
                         <div class="input-box">
                             <label for="">Book ID</label>
                             <input type="text" name="edit_issue_id" />
-                            <div id="show book"></div>
                         </div>
                         <div class="input-box">
                             <label for="">Issue Date</label>

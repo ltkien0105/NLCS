@@ -279,6 +279,29 @@
             }
             return $data;
         }
-    }
 
+        //Profile
+        public function getProfile($username) {
+            $sql = "SELECT *
+                    FROM readers r INNER JOIN accounts a ON r.reader_username = a.username
+                    WHERE a.username = '$username'";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
+        public function updateProfile($table, $username, $column, $value) {
+            $sql = "UPDATE readers SET $column='$value' WHERE reader_username='$username'";
+            return $this->execute($sql);
+        }
+
+        public function updatePassword($username, $column, $value) {
+            $sql = "UPDATE accounts SET $column='$value' WHERE username='$username'";
+            return $this->execute($sql);
+        }
+    }
 ?>

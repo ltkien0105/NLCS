@@ -36,12 +36,12 @@
         $username = $_POST['readerUsernameDelete'];
         $id = $_POST['bookIdDelete'];
         $db->deleteIssueBookByBookId($username, $id);
-    } elseif (isset($_POST['edit_reader_username'])) {
-        $data = $db->getReaderByUsername($_POST['edit_reader_username']);
-        echo $data;
-    } elseif (isset($_POST['edit_book_id'])) {
-        $data = $db->getBookById($_POST['edit_book_id']);
-        echo $data;
+    } elseif (isset($_POST['show_add_username'])) {
+        $showUsername = $db->getReaderByUsername($_POST['show_add_username']);
+        echo json_encode($showUsername);
+    } elseif (isset($_POST['show_add_id'])) {
+        $showId = $db->getBookById($_POST['show_add_id']);
+        echo json_encode($showId);   
     }else {
         $table = "issue_books";
         $data = $db->getAllData($table);

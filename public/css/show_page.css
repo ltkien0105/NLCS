@@ -213,7 +213,7 @@ table td {
 }
 
 .box-add.edit {
-    height: 60%;
+    height: 70%;
 }
 
 .box-add.edit.book {
@@ -273,8 +273,33 @@ table td {
 .box-add.issue-book .input-box {
     width: 100%;
     display: grid;
-    grid-template-columns: 20% 35% 40%;
+    grid-template-columns: 55% 40%;
     gap: 1em;
+}
+
+.box-add.issue-book .left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-add.issue-book .left label {
+    transform: translateY(-5%);
+    width: 30%;
+    margin-right: 1em;
+}
+
+.box-add.issue-book .left input {
+    width: 80%
+}
+
+.box-add.issue-book .input-box.username,
+.box-add.issue-book .input-box.id {
+    height: 22%;
+}
+
+.box-add.issue-book form {
+    height: 100%;
 }
 
 .box-add .input-box label {
@@ -291,24 +316,27 @@ table td {
 }
 
 .box-add.issue-book input[name="add_issue_username"],
-.box-add.issue-book input[name="add_issue_id"],
-.box-add.issue-book input[name="edit_issue_username"],
-.box-add.issue-book input[name="edit_issue_id"] {
+.box-add.issue-book input[name="add_issue_id"] {
     height: 25%
 }
 
 .box-add.issue-book .input-box .show {
     width: 100%;
-    display: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .box-add.issue-book .input-box .show.reader,
 .box-add.issue-book .input-box .show.book {
     padding: 4px;
-    display: block
+    border: 1px solid #000;
 }
 
-.box-add.issue-book label {
+.box-add label {
+    width: 35%;
     text-align: end;
 }
 
@@ -387,3 +415,56 @@ table td {
     height: 50%;
     font-size: 1.1em;
 }
+
+/* Profile */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-add.profile-box {
+    display: block;
+    width: 70%;
+    height: 80%;
+}
+
+.box-add.profile-box label{
+    margin-right: 50px;
+}
+
+.box-add.profile-box input, 
+.box-add.profile-box .select-box {
+    margin-right: 15%;
+}
+
+.box-add.profile-box .submit-btn {
+    width: 80%;
+}
+
+.change-pass-btn {
+    display: relative;
+    height: 30px;
+    width: 25%;
+}
+
+.change-pass-btn button{
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-size: 0.8em;
+    background-color: #8fd4f4;
+}
+
+.change-pass-btn button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.box-add.edit.pass {
+    height: 55%
+}
+
+/* .box-add.edit.pass input {
+    height: 100%
+} */

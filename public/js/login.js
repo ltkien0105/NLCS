@@ -57,7 +57,7 @@ $("document").ready(function () {
       type: 'post',
       data: values,
       success: function (data) {
-        location.href = data;
+        location.href = data + `?u=${values['username']}`;
       },
       error: function (xhr, status, error) {
         console.log(xhr);
@@ -80,7 +80,7 @@ $("document").ready(function () {
       signUpAddress: signUpAddress.val(),
     };
 
-    if (signUpFullname.val() !== confirmPassword.val()) {
+    if (signUpPassword.val() === confirmPassword.val()) {
       $.ajax({
         url: './mvc/controller/SignUp.php',
         type: 'post',

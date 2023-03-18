@@ -20,7 +20,6 @@ $("document").ready(function () {
         type: "get",
         success: function (response) {
             data = JSON.parse(response);
-            console.log(data);
         },
     });
 
@@ -45,31 +44,28 @@ $("document").ready(function () {
     }
 
     var table, exportData;
-    setTimeout(function() {
-        loadDataToTable(data,1,5);
+    setTimeout(function () {
+        loadDataToTable(data, 1, 5);
 
         table = $("#table-issue-book").tableExport({
             formats: ["xlsx"],
             exportButtons: false,
-            ignoreCols: [6]
+            ignoreCols: [6],
         });
 
-        exportData = table.getExportData()['table-issue-book']["xlsx"];
-    }, 100)
+        exportData = table.getExportData()["table-issue-book"]["xlsx"];
+    }, 100);
 
-    $('#export-btn').click(function(e) {
+    $("#export-btn").click(function (e) {
         e.preventDefault();
         console.log(exportData);
-        table.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension)
-    })
-
-    showAllBtn.click(function(e) {
-        e.preventDefault();
-        var rowNumberCurrent = $("tbody tr").length;
-        if(rowNumberCurrent < data.length) {
-            loadDataToTable(data, rowNumberCurrent+1, data.length)
-        }
-    })
+        table.export2file(
+            exportData.data,
+            exportData.mimeType,
+            exportData.filename,
+            exportData.fileExtension
+        );
+    });
 
     showAllBtn.click(function (e) {
         e.preventDefault();
@@ -79,54 +75,27 @@ $("document").ready(function () {
         }
     });
 
+    function createDatePicker(element) {
+        element.datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+    }
 
-    issueDateSearch.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
-
-    expiredDateSearch.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
-
-    issueDateAdd.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
-
-    expiredDateAdd.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
-
-    issueDateEdit.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
-
-    expiredDateEdit.datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-    });
+    var datepickerInputs = [
+        issueDateSearch,
+        expiredDateSearch,
+        issueDateAdd,
+        expiredDateAdd,
+        issueDateEdit,
+        expiredDateEdit,
+    ];
+    for (let datepickerInput of datepickerInputs) {
+        createDatePicker(datepickerInput);
+    }
 
     function showModal() {
         container.addClass("open");
@@ -221,7 +190,6 @@ $("document").ready(function () {
                 },
                 success: function (data) {
                     const response = JSON.parse(data);
-                    console.log(response);
                     $('.box-add.edit input[name="edit_issue_username"]').val(
                         response[0]
                     );
@@ -326,7 +294,7 @@ $("document").ready(function () {
     //Sort
     function sortTable(columnIndex, order) {
         var table, rows, switching, i, x, y, shouldSwitch;
-        table = $('#table-issue-book');
+        table = $("#table-issue-book");
         switching = true;
         while (switching) {
             switching = false;
@@ -335,7 +303,7 @@ $("document").ready(function () {
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName("td")[columnIndex];
                 y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-                if(columnIndex == 2 || columnIndex == 3) {
+                if (columnIndex == 2 || columnIndex == 3) {
                     const dayX = x.innerHTML.split("/")[0];
                     const monthX = x.innerHTML.split("/")[1];
                     const yearX = x.innerHTML.split("/")[2];
@@ -343,30 +311,34 @@ $("document").ready(function () {
                     const dayY = y.innerHTML.split("/")[0];
                     const monthY = y.innerHTML.split("/")[1];
                     const yearY = y.innerHTML.split("/")[2];
-                    
+
                     const dateX = new Date(yearX, monthX, dayX);
                     const dateY = new Date(yearY, monthY, dayY);
-                    if(order == "asc") {
-                        if(dateX > dateY) {
+                    if (order == "asc") {
+                        if (dateX > dateY) {
                             shouldSwitch = true;
                             break;
                         }
-                    }    
-                    else if(order == "des") {
-                        if(dateX < dateY) {
+                    } else if (order == "des") {
+                        if (dateX < dateY) {
                             shouldSwitch = true;
                             break;
                         }
                     }
                 } else {
-                    if(order == "asc") {
-                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    if (order == "asc") {
+                        if (
+                            x.innerHTML.toLowerCase() >
+                            y.innerHTML.toLowerCase()
+                        ) {
                             shouldSwitch = true;
                             break;
                         }
-                    }    
-                    else if(order == "des") {
-                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    } else if (order == "des") {
+                        if (
+                            x.innerHTML.toLowerCase() <
+                            y.innerHTML.toLowerCase()
+                        ) {
                             shouldSwitch = true;
                             break;
                         }
@@ -380,51 +352,63 @@ $("document").ready(function () {
         }
     }
 
-    $('#sort-value').change(function() {
-        sortTable($(this).val(), $('#sort-order').val());
-    })
-    
-    $('#sort-order').change(function() {
-        sortTable($('#sort-value').val(), $(this).val());
-    })
+    $("#sort-value").change(function () {
+        sortTable($(this).val(), $("#sort-order").val());
+    });
 
-    $('.edit-issue-username').input(function() {
+    $("#sort-order").change(function () {
+        sortTable($("#sort-value").val(), $(this).val());
+    });
+
+    $('input[name="add_issue_username"]').keyup(function () {
         $.ajax({
-            url: "../controller/readers/Readers.php",
-            type: 'post',
-            values: {'edit_reader_username': $(this).val()},
-            success: function(data) {
-                const response = JSON.parse(data);
-                console.log(response);
-                $('.show.reader').append(
-                    `<p>Username: ${response[0]['reader_username']}</p>
-                    <p>Full Name: ${response[0]['reader_fullname']}</p>
-                    <p>Gender: ${response[0]['reader_gender']}</p>
-                    <p>Email: ${response[0]['reader_email']}</p>
-                    <p>Address: ${response[0]['reader_address']}</p>
-                    <p>Phone Number; ${response[0]['reader_phonenumber']}</p>`
-                );
-            }
-        })
-    })
-    
-    $('.edit-issue-id').input(function() {
+            url: "../controller/books/IssueBooks.php",
+            type: "post",
+            data: { show_add_username: $(this).val() },
+            success: function (data) {
+                if (data == "0") {
+                    $(".show.add.reader").empty();
+                    $(".show.add.reader").append(`<p>Data doesn't exist</p>`);
+                } else {
+                    console.log(typeof data);
+                    const response = JSON.parse(data);
+                    $(".show.add.reader").empty();
+                    $(".show.add.reader").append(
+                        `<p>Username: ${response[0]}</p>
+                        <p>Full Name: ${response[1]}</p>
+                        <p>Gender: ${response[2]}</p>
+                        <p>Email: ${response[3]}</p>
+                        <p>Address: ${response[4]}</p>
+                        <p>Phone Number; ${response[5]}</p>`
+                    );
+                }
+            },
+        });
+    });
+
+    $('input[name="add_issue_id"]').keyup(function () {
         $.ajax({
-            url: "../controller/books/Books.php",
-            type: 'post',
-            values: {'edit_book_id': $(this).val()},
-            success: function(data) {
-                const response = JSON.parse(data);
-                console.log(response);
-                $('.show.book').append(
-                    `<p>ID: ${response[0]['book_id']}</p>
-                    <p>Name: ${response[0]['book_name']}</p>
-                    <p>Author: ${response[0]['book_author']}</p>
-                    <p>Publisher: ${response[0]['book_publisher']}</p>
-                    <p>Category; ${response[0]['book_category']}</p>
-                    <p>Amount: ${response[0]['book_remaining_amount']}/${response[0]['book_total_amount']}</p>`
-                );
-            }
-        })
-    })
+            url: "../controller/books/IssueBooks.php",
+            type: "post",
+            data: { show_add_id: $(this).val() },
+            success: function (data) {
+                if (data == "0") {
+                    $(".show.add.book").empty();
+                    $(".show.add.book").append(`<p>Data doesn't exist</p>`);
+                } else {
+                    console.log(typeof data);
+                    const response = JSON.parse(data);
+                    $(".show.add.book").empty();
+                    $(".show.add.book").append(
+                        `<p>ID: ${response[0]}</p>
+                        <p>Name: ${response[1]}</p>
+                        <p>Author: ${response[2]}</p>
+                        <p>Publisher: ${response[3]}</p>
+                        <p>Category; ${response[4]}</p>
+                        <p>Amount: ${response[6]}/${response[5]}</p>`
+                    );
+                }
+            },
+        });
+    });
 });

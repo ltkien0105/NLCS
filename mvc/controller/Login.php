@@ -12,7 +12,7 @@
             if($username == $data[$i]['username'] && $password == $data[$i]['password'] && $data[$i]['role'] == 'librarian') {
                 echo './mvc/view/dashboard.html';
             } else if($username == $data[$i]['username'] && $password == $data[$i]['password'] && $data[$i]['role'] == 'reader') {
-                echo './mvc/view/user-profile.html';
+                echo "./mvc/view/reader-profile.html?u=.'$username'.";
             }
         }
     } else {
