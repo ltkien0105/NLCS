@@ -11,9 +11,10 @@
         $email =  $_POST["add_email"];
         $address =  $_POST["add_address"];
         $phonenumber =  $_POST["add_phoneNumber"];
+
         if($db->insertAccount($username, $password)) {
             if($db->insertReader($username, $fullname, $gender, $email, $address, $phonenumber)) {
-                echo "Add successfully!";
+                echo "success";
             }   
         }
     } elseif(isset($_POST['usernameEdit'])) {
@@ -28,13 +29,17 @@
         $address =  $_POST["edit_address"];
         $phonenumber =  $_POST["edit_phoneNumber"];
         if($db->updateReader($username, $fullname, $gender, $email, $address, $phonenumber)) {
-            echo "Success";
+            echo "success";
         }
     } elseif(isset($_POST['usernameDelete'])) {
         $username = $_POST['usernameDelete'];
-        $db->deleteIssueBookByUsername($username);
-        $db->deleteReader($username);
-        $db->deleteAccount($username);
+        if($db->deleteIssueBookByUsername($username)) {
+            if($db->deleteReader($username)) {
+                if($db->deleteAccount($username)) {
+                    echo "success";
+                }
+            }
+        }
     } else {
         $table = "readers";
         $data = $db->getAllData($table);

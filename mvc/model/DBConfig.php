@@ -125,8 +125,8 @@
         // ------------ Books ------------
         //Add book's data
         public function insertBook($name, $author, $publisher, $category, $total_amount) {
-            $sql = "INSERT INTO books
-             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount', 'now()')";
+            $sql = "INSERT INTO books(book_name, book_author, book_publisher, book_category, book_total_amount, book_remaining_amount, book_create_time)
+             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount', now())";
             return $this->execute($sql);
         }
         
@@ -294,7 +294,7 @@
             return $data;
         }
 
-        public function updateProfile($table, $username, $column, $value) {
+        public function updateProfile($username, $column, $value) {
             $sql = "UPDATE readers SET $column='$value' WHERE reader_username='$username'";
             return $this->execute($sql);
         }
@@ -302,6 +302,22 @@
         public function updatePassword($username, $column, $value) {
             $sql = "UPDATE accounts SET $column='$value' WHERE username='$username'";
             return $this->execute($sql);
+        }
+
+        public function getIssueOfReader($username) {
+            $sql = "SELECT i.book_id, book_name, issue_date, expired_date, amount, issue_status
+                    FROM issue_books i INNER JOIN books b ON i.book_id = b.book_id
+                    WHERE reader_username = '$username'";
+
+            $this->execute($sql);
+            if($this->count_num_rows() == 0) {
+                $data = 0;
+            } else {
+                while ($datas = $this->getData()) {
+                    $data[] = $datas;
+                }
+            }
+            return $data;
         }
     }
 ?>

@@ -13,7 +13,7 @@
         $issueDateFormat = str_replace('/', '-', $issueDate);
         $expiredDateFormat = str_replace('/', '-', $expiredDate);
         if($db->insertIssueBook($username, $id, date('Y-m-d', strtotime($issueDateFormat)), date('Y-m-d', strtotime($expiredDateFormat)), $amount)) {
-            echo "Add successfully!";
+            echo "success";
         }
     } elseif(isset($_POST['readerUsernameIssue'])) {
         $username = $_POST['readerUsernameIssue'];
@@ -30,12 +30,14 @@
         $issueDateFormat = str_replace('/', '-', $issueDate);
         $expiredDateFormat = str_replace('/', '-', $expiredDate);
         if($db->updateIssueBook($username, $id, date('Y-m-d', strtotime($issueDateFormat)), date('Y-m-d', strtotime($expiredDateFormat)), $amount, $status)) {
-            echo "Success";
+            echo "success";
         }
     } elseif(isset($_POST['readerUsernameDelete'])) {
         $username = $_POST['readerUsernameDelete'];
         $id = $_POST['bookIdDelete'];
-        $db->deleteIssueBookByBookId($username, $id);
+        if($db->deleteIssueBookByBookId($username, $id)) {
+            echo "success";
+        }
     } elseif (isset($_POST['show_add_username'])) {
         $showUsername = $db->getReaderByUsername($_POST['show_add_username']);
         echo json_encode($showUsername);

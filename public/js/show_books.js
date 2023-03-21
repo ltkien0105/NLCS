@@ -1,3 +1,5 @@
+import { toast } from "./general-function.js";
+
 $("document").ready(function () {
     const addBtn = $(".add-btn");
     const container = $(".container");
@@ -59,6 +61,11 @@ $("document").ready(function () {
             exportData.filename,
             exportData.fileExtension
         );
+        toast({
+            title: 'Success',
+            message: 'Export successfully.',
+            type: 'success'
+        })
     });
 
     showAllBtn.click(function (e) {
@@ -108,9 +115,21 @@ $("document").ready(function () {
                 add_book_category: category,
                 add_book_total_amount: totalAmount,
             },
-            success: function (response) {
-                location.reload();
-            },
+            success: function (data) {
+                console.log(data);
+                if (data === "success") {
+                    toast({
+                        title: "Success",
+                        message: "Add book successfully, please reload to see new information",
+                        type: "success",
+                    });
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Add reader failed",
+                        type: "error",
+                    });
+                }},
         });
     });
 
@@ -139,9 +158,16 @@ $("document").ready(function () {
                 edit_book_category: category,
                 edit_book_amount_added: amountAdded,
             },
-            success: function (response) {
-                location.reload();
-            },
+            success: function (data) {
+                if (data === "success") {
+                    location.reload();
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Add reader failed",
+                        type: "error",
+                    });
+                }},
         });
     });
 
@@ -189,7 +215,15 @@ $("document").ready(function () {
                 type: "post",
                 data: { bookIdDelete: $(tds[0]).text() },
                 success: function (data) {
-                    location.reload(true);
+                    if (data === "success") {
+                        location.reload();
+                    } else {
+                        toast({
+                            title: "Error",
+                            message: "Delete reader failed",
+                            type: "error",
+                        });
+                    }
                 },
             });
         }
@@ -241,7 +275,7 @@ $("document").ready(function () {
                 .find("tr")
                 .each(function () {
                     var result = true;
-                    td = $(this).find("td");
+                    var td = $(this).find("td");
                     const splashPos = $(td[5]).text().indexOf("/");
                     const totalAmount = $(td[5])
                         .text()
@@ -270,7 +304,7 @@ $("document").ready(function () {
     //Sort
     function sortTable(columnIndex, order) {
         var table, rows, switching, i, x, y, shouldSwitch;
-        table = $('#table-book');
+        table = $("#table-book");
         switching = true;
         while (switching) {
             switching = false;
@@ -279,37 +313,36 @@ $("document").ready(function () {
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName("td")[columnIndex];
                 y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-                if(columnIndex == 5) {
+                if (columnIndex == 5) {
                     const splashPosX = x.innerHTML.indexOf("/");
-                    const totalAmountX = x
-                        .innerHTML
-                        .slice(splashPosX + 1);
+                    const totalAmountX = x.innerHTML.slice(splashPosX + 1);
                     const splashPosY = y.innerHTML.indexOf("/");
-                    const totalAmountY = y
-                        .innerHTML
-                        .slice(splashPosY + 1);
-                    if(order == "asc") {
-                        if(totalAmountX > totalAmountY) {
+                    const totalAmountY = y.innerHTML.slice(splashPosY + 1);
+                    if (order == "asc") {
+                        if (totalAmountX > totalAmountY) {
                             shouldSwitch = true;
                             break;
                         }
-                    }    
-                    else if(order == "des") {
-                        if(totalAmountX < totalAmountY) {
+                    } else if (order == "des") {
+                        if (totalAmountX < totalAmountY) {
                             shouldSwitch = true;
                             break;
                         }
                     }
-                }
-                else{
-                    if(order == "asc") {
-                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                } else {
+                    if (order == "asc") {
+                        if (
+                            x.innerHTML.toLowerCase() >
+                            y.innerHTML.toLowerCase()
+                        ) {
                             shouldSwitch = true;
                             break;
                         }
-                    }    
-                    else if(order == "des") {
-                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    } else if (order == "des") {
+                        if (
+                            x.innerHTML.toLowerCase() <
+                            y.innerHTML.toLowerCase()
+                        ) {
                             shouldSwitch = true;
                             break;
                         }
@@ -323,11 +356,11 @@ $("document").ready(function () {
         }
     }
 
-    $('#sort-value').change(function() {
-        sortTable($(this).val(), $('#sort-order').val());
-    })
-    
-    $('#sort-order').change(function() {
-        sortTable($('#sort-value').val(), $(this).val());
-    })
+    $("#sort-value").change(function () {
+        sortTable($(this).val(), $("#sort-order").val());
+    });
+
+    $("#sort-order").change(function () {
+        sortTable($("#sort-value").val(), $(this).val());
+    });
 });

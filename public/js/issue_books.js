@@ -1,3 +1,5 @@
+import {toast} from './general-function.js'
+
 $("document").ready(function () {
     const addBtn = $(".add-btn");
     const container = $(".container");
@@ -65,6 +67,11 @@ $("document").ready(function () {
             exportData.filename,
             exportData.fileExtension
         );
+        toast({
+            title: 'Success',
+            message: 'Export successfully.',
+            type: 'success'
+        })
     });
 
     showAllBtn.click(function (e) {
@@ -134,8 +141,21 @@ $("document").ready(function () {
                 add_issue_expired: expiredDate,
                 add_issue_amount: amount,
             },
-            success: function (response) {
-                location.reload();
+            success: function (data) {
+                console.log(data);
+                if (data === "success") {
+                    toast({
+                        title: "Success",
+                        message: "Add issue book successfully, please reload to see new information",
+                        type: "success",
+                    });
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Add issue book failed",
+                        type: "error",
+                    });
+                }
             },
         });
     });
@@ -167,8 +187,16 @@ $("document").ready(function () {
                 edit_issue_amount: amount,
                 edit_issue_status: status,
             },
-            success: function (response) {
-                location.reload();
+            success: function (data) {
+                if (data === "success") {
+                    location.reload();
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Edit reader failed",
+                        type: "error",
+                    });
+                }
             },
         });
     });
@@ -225,7 +253,16 @@ $("document").ready(function () {
                     bookIdDelete: $(tds[1]).text(),
                 },
                 success: function (data) {
-                    location.reload(true);
+                    console.log(data);
+                    if (data === "success") {
+                        location.reload();
+                    } else {
+                        toast({
+                            title: "Error",
+                            message: "Delete reader failed",
+                            type: "error",
+                        });
+                    }
                 },
             });
         }
@@ -275,7 +312,7 @@ $("document").ready(function () {
                 .find("tr")
                 .each(function () {
                     var result = true;
-                    td = $(this).find("td");
+                    var td = $(this).find("td");
                     for (let i = 0; i < values.length; i++) {
                         if (
                             !$(td[i])

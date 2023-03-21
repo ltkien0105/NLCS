@@ -1,3 +1,5 @@
+import { toast } from "./general-function.js";
+
 $("document").ready(function () {
     const addBtn = $(".add-btn");
     const container = $(".container");
@@ -6,7 +8,6 @@ $("document").ready(function () {
     const addSubmit = $('input[name="add_reader_submit"]');
     const editSubmit = $('input[name="edit_reader_submit"]');
     const applyBtn = $(".apply-btn");
-    const exportBtn = $(".export-btn");
     const showAllBtn = $("#show-all");
     var data = {};
 
@@ -19,10 +20,10 @@ $("document").ready(function () {
     });
 
     function loadDataToTable(data, rowStart, rowEnd) {
-        if(rowEnd > data.length) {
+        if (rowEnd > data.length) {
             rowEnd = data.length;
         }
-        for(let row = (rowStart-1); row < rowEnd; row++) {
+        for (let row = rowStart - 1; row < rowEnd; row++) {
             $("tbody").append(`<tr>
                 <td>${data[row]["reader_username"]}</td>
                 <td>${data[row]["reader_fullname"]}</td>
@@ -39,38 +40,47 @@ $("document").ready(function () {
     }
 
     var table, exportData;
-    setTimeout(function() {
-        loadDataToTable(data,1,5);
+    setTimeout(function () {
+        loadDataToTable(data, 1, 5);
 
         table = $("#table-reader").tableExport({
             formats: ["xlsx"],
             exportButtons: false,
-            ignoreCols: [6]
+            ignoreCols: [6],
         });
 
-        exportData = table.getExportData()['table-reader']["xlsx"];
-    }, 100)
+        exportData = table.getExportData()["table-reader"]["xlsx"];
+    }, 100);
 
-    $('#export-btn').click(function(e) {
+    $("#export-btn").click(function (e) {
         e.preventDefault();
-        console.log(exportData);
-        table.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension)
-    })
+        table.export2file(
+            exportData.data,
+            exportData.mimeType,
+            exportData.filename,
+            exportData.fileExtension
+        );
+        toast({
+            title: "Success",
+            message: "Export successfully",
+            type: "success",
+        });
+    });
 
-    showAllBtn.click(function(e) {
+    showAllBtn.click(function (e) {
         e.preventDefault();
         var rowNumberCurrent = $("tbody tr").length;
-        if(rowNumberCurrent < data.length) {
-            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        if (rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent + 1, data.length);
         }
-    })
-    showAllBtn.click(function(e) {
+    });
+    showAllBtn.click(function (e) {
         e.preventDefault();
         var rowNumberCurrent = $("tbody tr").length;
-        if(rowNumberCurrent < data.length) {
-            loadDataToTable(data, rowNumberCurrent+1, data.length)
+        if (rowNumberCurrent < data.length) {
+            loadDataToTable(data, rowNumberCurrent + 1, data.length);
         }
-    })
+    });
 
     function showModal() {
         container.addClass("open");
@@ -111,8 +121,20 @@ $("document").ready(function () {
                 add_address: address,
                 add_phoneNumber: phoneNumber,
             },
-            success: function (response) {
-                location.reload();
+            success: function (data) {
+                if (data === "success") {
+                    toast({
+                        title: "Success",
+                        message: "Add reader successfully",
+                        type: "success",
+                    });
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Add reader failed",
+                        type: "error",
+                    });
+                }
             },
         });
     });
@@ -138,8 +160,21 @@ $("document").ready(function () {
                 edit_address: address,
                 edit_phoneNumber: phoneNumber,
             },
-            success: function () {
-                location.reload(true);
+            success: function (data) {
+                if (data === "success") {
+                    toast({
+                        title: "Success",
+                        message:
+                            "Edit reader successfully, please reload to see new information",
+                        type: "success",
+                    });
+                } else {
+                    toast({
+                        title: "Error",
+                        message: "Edit reader failed",
+                        type: "error",
+                    });
+                }
             },
         });
     });
@@ -180,7 +215,15 @@ $("document").ready(function () {
                 type: "post",
                 data: { usernameDelete: $(tds[0]).text() },
                 success: function (data) {
-                    location.reload(true);
+                    if (data === "success") {
+                        location.reload();
+                    } else {
+                        toast({
+                            title: "Error",
+                            message: "Delete reader failed",
+                            type: "error",
+                        });
+                    }
                 },
             });
         }
@@ -234,7 +277,7 @@ $("document").ready(function () {
                 .find("tr")
                 .each(function () {
                     var result = true;
-                    td = $(this).find("td");
+                    var td = $(this).find("td");
                     for (let i = 0; i < values.length; i++) {
                         if (values[i] == null || values[i] == "") {
                             continue;
@@ -256,14 +299,13 @@ $("document").ready(function () {
                     }
                     $(this).toggle(result);
                 });
-                
         });
     });
 
     //Sort
     function sortTable(columnIndex, order) {
         var table, rows, switching, i, x, y, shouldSwitch;
-        table = $('#table-reader');
+        table = $("#table-reader");
         switching = true;
         while (switching) {
             switching = false;
@@ -272,14 +314,13 @@ $("document").ready(function () {
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName("td")[columnIndex];
                 y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-                if(order == "asc") {
-                    if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                if (order == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                         shouldSwitch = true;
                         break;
                     }
-                }    
-                else if(order == "des") {
-                    if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                } else if (order == "des") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
                         shouldSwitch = true;
                         break;
                     }
@@ -292,11 +333,19 @@ $("document").ready(function () {
         }
     }
 
-    $('#sort-value').change(function() {
-        sortTable($(this).val(), $('#sort-order').val());
-    })
-    
-    $('#sort-order').change(function() {
-        sortTable($('#sort-value').val(), $(this).val());
-    })
+    $("#sort-value").change(function () {
+        sortTable($(this).val(), $("#sort-order").val());
+    });
+
+    $("#sort-order").change(function () {
+        sortTable($("#sort-value").val(), $(this).val());
+    });
+
+    $("#test").click(function () {
+        toast({
+            title: "Success",
+            message: "Add reader successfully",
+            type: "success",
+        });
+    });
 });

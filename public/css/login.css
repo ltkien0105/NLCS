@@ -287,3 +287,112 @@ select {
 .inputBox select:focus ~ i{
     height: 100%;
 }
+
+/* --------------- Toast Message --------------- */
+#toast {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 3;
+}
+
+.toast {
+    min-width: 400px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px 0px;
+    border-radius: 2px;
+    border-left: 4px solid;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transition: all linear 0.3s;
+    animation: slideInLeft ease 0.5s, fadeOut forwards 1s 3s;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px))
+    } to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.toast.success {
+    border-color: #47d864;
+}
+
+.toast.success .toast-icon {
+    color: #47d864;
+}
+
+.toast.info {
+    border-color: #2f86eb;
+}
+
+.toast.info .toast-icon {
+    color: #2f86eb;
+}
+
+.toast.warning {
+    border-color: #ffc021;
+}
+
+.toast.warning .toast-icon {
+    color: #ffc021;
+}
+
+.toast.error {
+    border-color: #ff623d;
+}
+
+.toast.error .toast-icon {
+    color: #ff623d;
+}
+
+
+.toast + .toast {
+    margin-top: 24px;
+}
+
+.toast-icon {
+    font-size: 40px;
+}
+
+.toast-icon,
+.toast-close {
+    padding: 0 16px;
+    transform: translateY(5px);
+}
+.toast-body {
+    flex-grow: 1;
+}
+
+.toast-title {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.toast-msg {
+    font-size: 14px;
+    color: #888;
+    margin-top: 6px;
+    list-style: 1.4;
+}
+
+.toast-close {
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
