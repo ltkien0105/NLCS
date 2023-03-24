@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
             rel="stylesheet"
             href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/humanity/jquery-ui.css"
         />
-        <link rel="stylesheet" href="../../public/css/dashboard.css">
+        <link rel="stylesheet" href="../../public/css/dashboard.css" />
 
         <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
         <script
@@ -17,6 +17,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title>Dashboard</title>
     </head>
     <body>
@@ -25,7 +26,10 @@
             <div class="sidebar">
                 <div class="top-sidebar">
                     <div class="logo">
-                        <img src="../../public/assets/img/library-black-text.png" alt="">
+                        <img
+                            src="../../public/assets/img/library-black-text.png"
+                            alt=""
+                        />
                     </div>
                     <button class="close-btn">
                         <ion-icon name="close-sharp"></ion-icon>
@@ -64,10 +68,7 @@
             <aside>
                 <div class="dashboard">
                     <h1>Dashboard</h1>
-    
-                    <!-- <div class="date">
-                        <input type="text" id="">
-                    </div> -->
+
                     <!------------------ Begin: Insights ------------------>
                     <div class="insights">
                         <!-- Begin: Book -->
@@ -81,7 +82,7 @@
                             </div>
                         </div>
                         <!-- End: Book -->
-    
+
                         <!-- Begin: Reader-->
                         <div class="infor reader">
                             <ion-icon name="people-outline"></ion-icon>
@@ -93,7 +94,7 @@
                             </div>
                         </div>
                         <!-- End: Reader-->
-    
+
                         <!-- Begin: Issue Book-->
                         <div class="infor issue-book">
                             <ion-icon name="download-outline"></ion-icon>
@@ -117,10 +118,20 @@
                             </div>
                         </div>
                         <!-- End: New Reader-->
-                        
                     </div>
                     <!------------------ End: Insights -------------------->
-    
+
+                    <!------------------ Begin: Insights -------------------->
+                    <div class="chart">
+                        <div class="time-box">
+                            <button id="last-day" class="time selected">Last Day</button>
+                            <button id="last-week" class="time">Last Week</button>
+                            <button id="last-month" class="time">Last Month</button>
+                        </div>
+                        <canvas id="myChart" width="350" height="250"></canvas>
+                    </div>
+                    <!------------------ End: Insights -------------------->
+
                     <!------------------ Begin: New Information ------------------>
                     <!------- Begin: New User ------->
                     <div class="new-infor">
@@ -162,8 +173,14 @@
 </html>
 
 <!-- Add icon source -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+></script>
 
 <!-- Logic -->
 <script src="../../public/js/dashboard.js"></script>

@@ -217,6 +217,12 @@ $("document").ready(function () {
                 success: function (data) {
                     if (data === "success") {
                         location.reload();
+                    } else if(data === "isIssue") {
+                        toast({
+                            title: "Info",
+                            message: "This book is being borrowed, so you can't delete",
+                            type: "info",
+                        });
                     } else {
                         toast({
                             title: "Error",

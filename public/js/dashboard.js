@@ -1,9 +1,13 @@
 $(document).ready(function () {
+    const lastDayBtn = $("#last-day");
+    const lastWeekBtn = $("#last-week");
+    const lastMonthBtn = $("#last-month");
+    var data = {};
     $.ajax({
         url: "../controller/Dashboard.php",
         type: "get",
         success: function (response) {
-            const data = JSON.parse(response);
+            data = JSON.parse(response);
             console.log(data);
 
             $("#analyze-total-book").text(data["count_book"]);
@@ -31,6 +35,81 @@ $(document).ready(function () {
             }
         },
     });
+
+    setTimeout(function() {
+        var chartConfig = new Chart(document.getElementById("myChart"), {
+            type: "bar",
+            data: {
+                labels: ["New Book", "Book Issue", "New Reader", "Expired"],
+                datasets: [
+                    {
+                        label: "Amount",
+                        data: [
+                            data["new_book_date_chart"], 
+                            data["new_book_issue_date_chart"], 
+                            data["new_reader_date_chart"], 
+                            data["expired_date_chart"]
+                        ],
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                responsive: true,
+            },
+        });
+
+        lastDayBtn.click(function() {
+            lastWeekBtn.removeClass('selected');
+            lastMonthBtn.removeClass('selected');
+            $(this).addClass('selected');
+    
+            chartConfig.data.datasets[0].data = [
+                data["new_book_date_chart"], 
+                data["new_book_issue_date_chart"], 
+                data["new_reader_date_chart"], 
+                data["expired_date_chart"]
+            ]
+    
+            chartConfig.update();
+        })
+    
+    
+        lastWeekBtn.click(function() {
+            lastDayBtn.removeClass('selected');
+            lastMonthBtn.removeClass('selected');
+            $(this).addClass('selected');
+    
+            chartConfig.data.datasets[0].data = [
+                data["new_book_week_chart"], 
+                data["new_book_issue_week_chart"], 
+                data["new_reader_week_chart"], 
+                data["expired_week_chart"]
+            ]
+    
+            chartConfig.update();
+        })
+    
+        lastMonthBtn.click(function() {
+            lastDayBtn.removeClass('selected');
+            lastWeekBtn.removeClass('selected');
+            $(this).addClass('selected');
+    
+            chartConfig.data.datasets[0].data = [
+                data["new_book_month_chart"], 
+                data["new_book_issue_month_chart"], 
+                data["new_reader_month_chart"], 
+                data["expired_month_chart"]
+            ]
+    
+            chartConfig.update();
+        })
+    }, 1000);
 
     $("#menu-btn").click(function () {
         $(".sidebar").addClass("open");

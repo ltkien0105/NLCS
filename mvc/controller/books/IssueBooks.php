@@ -12,9 +12,15 @@
 
         $issueDateFormat = str_replace('/', '-', $issueDate);
         $expiredDateFormat = str_replace('/', '-', $expiredDate);
-        if($db->insertIssueBook($username, $id, date('Y-m-d', strtotime($issueDateFormat)), date('Y-m-d', strtotime($expiredDateFormat)), $amount)) {
-            echo "success";
+        $remainingBook = $db->getRemainingBook($id);
+        if($amount <= $remainingBook[0]) {
+            if($db->insertIssueBook($username, $id, date('Y-m-d', strtotime($issueDateFormat)), date('Y-m-d', strtotime($expiredDateFormat)), $amount)) {
+                echo "success";
+            }
+        } else {
+            echo "cannotIssue";
         }
+        
     } elseif(isset($_POST['readerUsernameIssue'])) {
         $username = $_POST['readerUsernameIssue'];
         $id = $_POST['bookIdIssue'];

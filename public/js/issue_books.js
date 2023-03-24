@@ -1,4 +1,5 @@
 import {toast} from './general-function.js'
+import {validate} from './general-function.js'
 
 $("document").ready(function () {
     const addBtn = $(".add-btn");
@@ -120,6 +121,22 @@ $("document").ready(function () {
         $(".box-add.add").show();
     });
 
+    const inputAddIssue = $(".box-add.add.issue-book input");
+    inputAddIssue.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
+                }
+            }
+        })
+    })
+
     addSubmit.click(function (e) {
         e.preventDefault();
         const username = $(
@@ -142,12 +159,17 @@ $("document").ready(function () {
                 add_issue_amount: amount,
             },
             success: function (data) {
-                console.log(data);
                 if (data === "success") {
                     toast({
                         title: "Success",
                         message: "Add issue book successfully, please reload to see new information",
                         type: "success",
+                    });
+                } else if (data == "cannotIssue"){
+                    toast({
+                        title: "Info",
+                        message: "Amount you want to borrow is larger than remaining book",
+                        type: "info",
                     });
                 } else {
                     toast({
@@ -159,6 +181,22 @@ $("document").ready(function () {
             },
         });
     });
+
+    const inputEditIssue = $(".box-add.edit input");
+    inputEditIssue.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
+                }
+            }
+        })
+    })
 
     editSubmit.click(function (e) {
         e.preventDefault();

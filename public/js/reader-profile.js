@@ -1,4 +1,5 @@
 import {toast} from './general-function.js'
+import {validate} from './general-function.js'
 
 $("document").ready(function() {
     const posUsername = location.href.indexOf('?u=');
@@ -45,6 +46,29 @@ $("document").ready(function() {
         $(".box-add.edit").show();
     })
 
+    const inputChangePass = $(".box-add.edit.pass input");
+    inputChangePass.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
+                } else {
+                    if(index == 3) {
+                        if($(inputChangePass[2]).val() !== $(inputChangePass[3]).val()) {
+                            $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>Confirm password doesn't match");
+                        } else {
+                            $(this).parent().find("p").text("");
+                        }
+                    }
+                }
+            }
+        })
+    })
     changePassSubmitBtn.click(function(e) {
         e.preventDefault();
 
@@ -90,36 +114,61 @@ $("document").ready(function() {
         }
     })
 
-    submitBtn.click(function(e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: '../controller/readers/Readers.php',
-            type: 'post',
-            data: {
-                edit_username: profile_username,
-                edit_fullname: $("input[name='fullname']").val(),
-                edit_gender: $("select[name='gender']").val(),
-                edit_email: $("input[name='email']").val(),
-                edit_address: $("input[name='address']").val(),
-                edit_phoneNumber: $("input[name='phonenumber']").val(),
-            },
-            success: function(response) {
-                console.log(response);
-                if(response === 'success') {
-                    toast({
-                        title: 'Success',
-                        message: 'Edit information successfully, please reload page to see new information.',
-                        type: 'success'
-                    })
-                } else {
-                    toast({
-                        title: 'Error',
-                        message: 'Edit information failed.',
-                        type: 'error'
-                    })
+    const inputEditReader = $(".box-add.profile-box input");
+    inputEditReader.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
                 }
             }
         })
+    })
+
+    submitBtn.click(function(e) {
+        e.preventDefault();
+
+        var isValid = true;
+        $('.box-add.profile-box p').each(function() {
+            if($(this).text() != '') {
+                isValid = false;
+            }
+        })
+
+        if(isValid) {
+            $.ajax({
+                url: '../controller/readers/Readers.php',
+                type: 'post',
+                data: {
+                    edit_username: profile_username,
+                    edit_fullname: $("input[name='fullname']").val(),
+                    edit_gender: $("select[name='gender']").val(),
+                    edit_email: $("input[name='email']").val(),
+                    edit_address: $("input[name='address']").val(),
+                    edit_phoneNumber: $("input[name='phonenumber']").val(),
+                },
+                success: function(response) {
+                    console.log(response);
+                    if(response === 'success') {
+                        toast({
+                            title: 'Success',
+                            message: 'Edit information successfully, please reload page to see new information.',
+                            type: 'success'
+                        })
+                    } else {
+                        toast({
+                            title: 'Error',
+                            message: 'Edit information failed.',
+                            type: 'error'
+                        })
+                    }
+                }
+            })
+        }
     })
 })

@@ -33,12 +33,14 @@
         }
     } elseif(isset($_POST['usernameDelete'])) {
         $username = $_POST['usernameDelete'];
-        if($db->deleteIssueBookByUsername($username)) {
+        if(!$db->isIssue($username, "")) {
             if($db->deleteReader($username)) {
                 if($db->deleteAccount($username)) {
                     echo "success";
                 }
             }
+        } else {
+            echo "isIssue";
         }
     } else {
         $table = "readers";

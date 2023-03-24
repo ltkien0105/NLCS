@@ -1,4 +1,5 @@
 import { toast } from "./general-function.js";
+import { validate } from "./general-function.js";
 
 $("document").ready(function () {
     const backLogin = $(".back-login");
@@ -59,7 +60,15 @@ $("document").ready(function () {
             type: "post",
             data: values,
             success: function (data) {
-                location.href = data + `?u=${values["username"]}`;
+                if(data != '') {
+                    location.href = data + `?u=${values["username"]}`;
+                } else {
+                    toast({
+                        title: 'Error',
+                        message: 'Username or password is incorrect',
+                        type: 'error'
+                    })
+                } 
             },
             error: function (xhr, status, error) {
                 console.log(xhr);
@@ -68,6 +77,30 @@ $("document").ready(function () {
             },
         });
     });
+
+    const inputSignUp = $(".box.sign-up .all-input input");
+    inputSignUp.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").text(validate($(this).attr("validate"), $(this).val()));
+                } else {
+                    if(index == 6) {
+                        if($(inputSignUp[5]).val() !== $(inputSignUp[6]).val()) {
+                            $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>Confirm password doesn't match");
+                        } else {
+                            $(this).parent().find("p").text("");
+                        }
+                    }
+                }
+            }
+        })
+    })   
 
     signupBtn.click(function (e) {
         e.preventDefault();
@@ -82,35 +115,44 @@ $("document").ready(function () {
             signUpAddress: signUpAddress.val(),
         };
 
-        if (signUpPassword.val() == confirmPassword.val()) {
-            $.ajax({
-                url: "./mvc/controller/SignUp.php",
-                type: "post",
-                data: values,
-                success: function (response) {
-                    if (response == "success") {
-                        toast({
-                            title: "Success",
-                            message:
-                                "Sign up successfully, please sign in to continue.",
-                            type: "success",
-                        });
-                    } 
-                    if (response.includes("Duplicate entry")){
-                        toast({
-                            title: "Error",
-                            message: "Username already exists",
-                            type: "error",
-                        });
-                    }
-                },
-            });
-        } else {
-            toast({
-                title: "Error",
-                message: "Confirm password doesn't match",
-                type: "error",
-            });
+        var isValid = true;
+        $('.box.sign-up p').each(function() {
+            if($(this).text() != '') {
+                isValid = false;
+            }
+        }) 
+
+        if(isValid) {
+            if (signUpPassword.val() == confirmPassword.val()) {
+                $.ajax({
+                    url: "./mvc/controller/SignUp.php",
+                    type: "post",
+                    data: values,
+                    success: function (response) {
+                        if (response == "success") {
+                            toast({
+                                title: "Success",
+                                message:
+                                    "Sign up successfully, please sign in to continue.",
+                                type: "success",
+                            });
+                        } 
+                        if (response.includes("Duplicate entry")){
+                            toast({
+                                title: "Error",
+                                message: "Username already exists",
+                                type: "error",
+                            });
+                        }
+                    },
+                });
+            } else {
+                toast({
+                    title: "Error",
+                    message: "Confirm password doesn't match",
+                    type: "error",
+                });
+            }
         }
     });
 });

@@ -227,16 +227,16 @@
                         <div class="input-box">
                             <div class="left">
                                 <label for="">Issue Date</label>
-                                <input type="text" name="add_issue_date" />
+                                <input validate="date" type="text" name="add_issue_date" />
                             </div>
-                            <div class="show"></div>
+                            <div class="show date"><p></p></div>
                         </div>
                         <div class="input-box">
                             <div class="left">
                                 <label for="">Expired Date</label>
-                                <input type="text" name="add_issue_expired" />
+                                <input validate="date" type="text" name="add_issue_expired" />
                             </div>
-                            <div class="show"></div>
+                            <div class="show date"><p></p></div>
                         </div>
                         <div class="input-box">
                             <div class="left">
@@ -262,23 +262,35 @@
                     <div class="all-input">
                         <div class="input-box">
                             <label for="">Username</label>
-                            <input type="text" name="edit_issue_username" />
+                            <div class="input-area">
+                                <input type="text" name="edit_issue_username" />
+                            </div>
                         </div>
                         <div class="input-box">
                             <label for="">Book ID</label>
-                            <input type="text" name="edit_issue_id" />
+                            <div class="input-area">
+                                <input type="text" name="edit_issue_id" />
+                            </div>
                         </div>
                         <div class="input-box">
                             <label for="">Issue Date</label>
-                            <input type="text" name="edit_issue_date" />
+                            <div class="input-area">
+                                <input validate="date" type="text" name="edit_issue_date" />
+                                <p></p>
+                            </div>
                         </div>
                         <div class="input-box">
                             <label for="">Expired Date</label>
-                            <input type="text" name="edit_issue_expired" />
+                            <div class="input-area">
+                                <input validate="date" type="text" name="edit_issue_expired" />
+                                <p></p>
+                            </div>
                         </div>
                         <div class="input-box">
                             <label for="">Amount</label>
-                            <input type="text" name="edit_issue_amount" />
+                            <div class="input-area">
+                                <input type="text" name="edit_issue_amount" />
+                            </div>
                         </div>
                         <div class="input-box">
                             <label for="">Status</label>

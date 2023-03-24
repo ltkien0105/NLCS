@@ -40,37 +40,41 @@ export function toast({
 }
 
 export function validate(type, inputValue) {
-    var result = true;
+    var message = ''
     switch(type) {
         case 'email':
             const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if(!(regexEmail.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Email is invalid';
             break;
         case 'username':
             const regexUsername = /^B\d{7}$/;
             if(!(regexUsername.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Username is invalid';
             break;
         case 'password':
-            const regexPassword = /.{8,30}/;
+            const regexPassword = /^.{8,30}$/;
             if(!(regexPassword.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Password must have 8-30 character';
+                
             break;
         case 'phonenumber':
             const regexPhone = /^0\d{9}$/;
             if(!(regexPhone.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Phone number is invalid'
             break;
         case 'amount':
             const regexAmount = /\d/;
             if(!(regexAmount.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>This field must be a numeric value';
             break;
         case 'date':
             const regexDate = /(^0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/
             if(!(regexDate.test(inputValue)))
-                result = false;
+                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Format date "day/month/year" is required'
             break;
-    } 
+        default:
+            message = '';
+    }
+    return message;
 }

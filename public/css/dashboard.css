@@ -175,20 +175,7 @@ body.dark-theme-variables .top-sidebar .close-btn{
     color: var(--color-dark);
 }
 
-.dashboard .date {
-    display: inline-block;
-    background-color: var(--color-light);
-    border-radius: 0.4em;
-    margin-top: 1.5em;
-    padding: 0.4em 1.3em;
-}
-
-.dashboard .date input[type="date"] {
-    color: var(--color-dark);
-    border: none;
-    outline: none;
-    background-color: transparent;
-}
+/* ================ Begin: Insight ================*/
 
 .dashboard .insights {
     display: grid;
@@ -250,6 +237,65 @@ body.dark-theme-variables .top-sidebar .close-btn{
     font-size: 0.8em;
     margin-top: 2em;
 }
+
+/* ================ End: Insight ================*/
+
+/* ================ Begin: Chart ================*/
+.chart {
+    position: relative;
+    background-color: var(--color-white);
+    border-radius: 2em;
+    margin-top: 2em;
+    height: 450px;
+    width: 100%;
+    box-shadow: 0 2em 3em var(--color-light);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5em
+}
+
+.time-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.time {
+    padding: 4px;
+    font-size: 1em;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.time:hover {
+    border-bottom: 2px solid #7380ec;
+}
+
+.selected {
+    border-bottom: 2px solid #7380ec;
+}
+
+.time:nth-child(1),
+.time:nth-child(2) {
+    margin-right: 2em;
+}
+
+#myChart {
+    /* margin-top: 2em; */
+}
+
+.chart:hover {
+    box-shadow: none;
+}
+
+
+/* ================ Begin: Chart ================*/
 
 /* ================ Begin: New Information ================*/
 .new-infor {

@@ -124,9 +124,9 @@
         }
         // ------------ Books ------------
         //Add book's data
-        public function insertBook($name, $author, $publisher, $category, $total_amount) {
+        public function insertBook($name, $author, $publisher, $category, $total_amount, $book_create_time = 'now()') {
             $sql = "INSERT INTO books(book_name, book_author, book_publisher, book_category, book_total_amount, book_remaining_amount, book_create_time)
-             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount', now())";
+             VALUE('$name', '$author', '$publisher', '$category', '$total_amount', '$total_amount', $book_create_time)";
             return $this->execute($sql);
         }
         
@@ -201,6 +201,17 @@
             return $data;
         }
 
+        public function getRemainingBook($id) {
+            $sql = "SELECT book_remaining_amount FROM books WHERE book_id='$id'";
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
         // ------------ Issue Books ------------
         //Add issue book's data
         public function insertIssueBook($reader_username, $book_id, $issue_date, $expired_date, $amount, $status='borrowing') {
@@ -253,9 +264,47 @@
             return $data;
         }
 
+        public function isIssue($username, $book_id) {
+            $sql = "";
+            if($username == "") {
+                $sql = "SELECT book_id FROM issue_books WHERE book_id='$book_id'";
+            } elseif($book_id == "") {
+                $sql = "SELECT reader_username FROM issue_books WHERE reader_username='$username'";
+            } else {
+                $sql = "SELECT reader_username, book_id FROM issue_books WHERE reader_username='$username' AND book_id='$book_id'";
+            }
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function getExpired($period) {
+            $sql = '';
+            if($period == "date") {
+                $sql = "SELECT count(*) FROM issue_books 
+                        WHERE issue_status = 'Expired' AND date(expired_date) = date(now() - interval 1 day);";
+            } elseif($period == "month"){
+                $sql = "SELECT count(*) FROM issue_books 
+                    WHERE issue_status = 'Expired' AND month(expired_date) = month(now() - interval 1 month);";
+            } elseif($period == "week") {
+                $sql = "SELECT count(*) FROM issue_books 
+                    WHERE issue_status = 'Expired' AND yearweek(expired_date) = yearweek(now() - interval 1 week);";
+            }
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
+            }
+            return $data;
+        }
+
         // ------------ Accounts ------------
-        public function insertAccount($username, $password, $role="reader") {
-            $sql = "INSERT INTO accounts VALUES('$username', '$password', '$role', now())";
+        public function insertAccount($username, $password, $role="reader", $create_time = 'now()') {
+            $sql = "INSERT INTO accounts VALUES('$username', '$password', '$role', $create_time)";
             return $this->execute($sql);
         }
 
@@ -316,6 +365,25 @@
                 while ($datas = $this->getData()) {
                     $data[] = $datas;
                 }
+            }
+            return $data;
+        }
+
+        //Dashboard
+        public function getInforLast($table, $period, $column) {
+            $sql = "";
+            if($period == "date") {
+                $sql = "SELECT count(*) FROM {$table} WHERE date({$column}) = date(now() - interval 1 day)";
+            } elseif($period == "week") {
+                $sql = "SELECT count(*) FROM {$table} WHERE yearweek({$column}) = yearweek(now() - interval 1 week)";
+            } elseif($period == "month") {
+                $sql = "SELECT count(*) FROM {$table} WHERE year({$column}) = year(now() - interval 1 month) AND month({$column}) = month(now() - interval 1 month);";
+            }
+            $this->execute($sql);
+            if($this->count_num_rows() != 0) {
+                $data = mysqli_fetch_array($this->result);
+            } else {
+                $data = 0;
             }
             return $data;
         }

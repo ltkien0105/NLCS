@@ -80,7 +80,8 @@ body {
 .inputBox {
     position: relative;
     width: 100%;
-    margin-top: 30px
+    margin-top: 30px;
+    background-color: transparent;
 }
 
 .inputBox input {
@@ -221,6 +222,16 @@ body {
     width: 50%;
     height: 85vh;
     display: none;
+}
+
+.box.sign-up p {
+    position: absolute;
+    background-color: transparent;
+    color: red;
+}
+
+.box.sign-up ion-icon {
+    transform: translateY(14%);
 }
 
 .box.sign-up form .all-input{

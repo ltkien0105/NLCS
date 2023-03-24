@@ -1,4 +1,5 @@
 import { toast } from "./general-function.js";
+import { validate } from "./general-function.js";
 
 $("document").ready(function () {
     const addBtn = $(".add-btn");
@@ -98,6 +99,22 @@ $("document").ready(function () {
         $(".box-add.add").show();
     });
 
+    const inputAddReader = $(".box-add.add input");
+    inputAddReader.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
+                }
+            }
+        })
+    })
+
     addSubmit.click(function (e) {
         e.preventDefault();
         const username = $('.box-add.add input[name="username"]').val().trim();
@@ -109,35 +126,61 @@ $("document").ready(function () {
         const phoneNumber = $('.box-add.add input[name="phonenumber"]')
             .val()
             .trim();
-        $.ajax({
-            url: "../controller/readers/Readers.php",
-            type: "post",
-            data: {
-                add_username: username,
-                add_password: password,
-                add_fullname: fullname,
-                add_gender: gender,
-                add_email: email,
-                add_address: address,
-                add_phoneNumber: phoneNumber,
-            },
-            success: function (data) {
-                if (data === "success") {
-                    toast({
-                        title: "Success",
-                        message: "Add reader successfully",
-                        type: "success",
-                    });
-                } else {
-                    toast({
-                        title: "Error",
-                        message: "Add reader failed",
-                        type: "error",
-                    });
-                }
-            },
-        });
+        
+        var isValid = true;
+        $('.box-add.add p').each(function() {
+            if($(this).text() != '') {
+                isValid = false;
+            }
+        })
+        console.log(isValid);
+        if(isValid) {
+            $.ajax({
+                url: "../controller/readers/Readers.php",
+                type: "post",
+                data: {
+                    add_username: username,
+                    add_password: password,
+                    add_fullname: fullname,
+                    add_gender: gender,
+                    add_email: email,
+                    add_address: address,
+                    add_phoneNumber: phoneNumber,
+                },
+                success: function (data) {
+                    if (data === "success") {
+                        toast({
+                            title: "Success",
+                            message: "Add reader successfully",
+                            type: "success",
+                        });
+                    } else {
+                        toast({
+                            title: "Error",
+                            message: "Add reader failed",
+                            type: "error",
+                        });
+                    }
+                },
+            });
+        }
     });
+
+    const inputEditReader = $(".box-add.edit input");
+    inputEditReader.each(function(index) {
+        $(this).focus(function() {
+            $(this).parent().find("p").text("");
+        })
+        $(this).blur(function() {
+            if($(this).val() == '') {
+                $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
+            } else { 
+                if(validate($(this).attr("validate"), $(this).val())) {
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
+                }
+            }
+        })
+    })
 
     editSubmit.click(function (e) {
         e.preventDefault();
@@ -149,34 +192,44 @@ $("document").ready(function () {
         const phoneNumber = $('.box-add.edit input[name="phonenumber"]')
             .val()
             .trim();
-        $.ajax({
-            url: "../controller/readers/Readers.php",
-            type: "post",
-            data: {
-                edit_username: username,
-                edit_fullname: fullname,
-                edit_gender: gender,
-                edit_email: email,
-                edit_address: address,
-                edit_phoneNumber: phoneNumber,
-            },
-            success: function (data) {
-                if (data === "success") {
-                    toast({
-                        title: "Success",
-                        message:
-                            "Edit reader successfully, please reload to see new information",
-                        type: "success",
-                    });
-                } else {
-                    toast({
-                        title: "Error",
-                        message: "Edit reader failed",
-                        type: "error",
-                    });
-                }
-            },
-        });
+
+        var isValid = true;
+        $('.box-add.edit p').each(function() {
+            if($(this).text() != '') {
+                isValid = false;
+            }
+        })
+
+        if(isValid) {
+            $.ajax({
+                url: "../controller/readers/Readers.php",
+                type: "post",
+                data: {
+                    edit_username: username,
+                    edit_fullname: fullname,
+                    edit_gender: gender,
+                    edit_email: email,
+                    edit_address: address,
+                    edit_phoneNumber: phoneNumber,
+                },
+                success: function (data) {
+                    if (data === "success") {
+                        toast({
+                            title: "Success",
+                            message:
+                                "Edit reader successfully, please reload to see new information",
+                            type: "success",
+                        });
+                    } else {
+                        toast({
+                            title: "Error",
+                            message: "Edit reader failed",
+                            type: "error",
+                        });
+                    }
+                },
+            });
+        }
     });
 
     //Because .add-btn and .delete-btn doesn't working after adding by ajax, we use 'click' method with this solution
@@ -217,6 +270,12 @@ $("document").ready(function () {
                 success: function (data) {
                     if (data === "success") {
                         location.reload();
+                    } else if(data === "isIssue") {
+                        toast({
+                            title: "Info",
+                            message: "This reader is borrowing book, so you can't delete",
+                            type: "info",
+                        });
                     } else {
                         toast({
                             title: "Error",

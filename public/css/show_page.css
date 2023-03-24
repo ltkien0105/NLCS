@@ -204,8 +204,8 @@ table td {
     display: none;
     flex-direction: column;
     background-color: #ECF2FF;
-    width: 30%;
-    height: 75%;
+    width: 40%;
+    height: 90%;
 }
 
 .box-add.add.book {
@@ -215,6 +215,12 @@ table td {
 .box-add.edit {
     height: 70%;
 }
+
+.box-add.edit p{
+    text-align: start;
+    color: red;
+}
+
 
 .box-add.edit.book {
     height: 65%;
@@ -264,6 +270,7 @@ table td {
 }
 
 .box-add .input-box {
+    margin-bottom: 0.2em;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -306,9 +313,27 @@ table td {
     transform: translateY(10%);
 }
 
-.box-add .input-box input,
+.box-add .input-box input {
+    width: 100%;
+}
+
+.box-add .input-box .show.add.book p,
+.box-add .input-box .show.add.reader p {
+    font-weight: 300;
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    color: #000;
+}
+
+.box-add .input-box p ion-icon {
+    transform: translateY(12%);
+    margin-right: 4px;
+}
+
+.box-add .input-box .input-area,
 .box-add .input-box .select-box {
-    width: 60%;
+    width: 57%;
 }
 
 .box-add.issue-book input {
@@ -379,11 +404,15 @@ table td {
 }
 
 .box-add p {
-    font-weight: 600;
-    font-size: 1.2em;
+    font-size: 0.8em;
+    text-align: start;
+    color: red;
+}
+
+.show.date p{
     width: 100%;
-    text-align: center;
-    margin-top: 0.8em;
+    text-align: start;
+    color: red;
 }
 
 .container.open {
@@ -429,13 +458,17 @@ table td {
     height: 80%;
 }
 
-.box-add.profile-box label{
-    margin-right: 50px;
+.box-add.profile-box input,
+.box-add.profile-box select {
+    width: 70%;
 }
 
-.box-add.profile-box input, 
-.box-add.profile-box .select-box {
-    margin-right: 15%;
+.box-add.profile-box input[type="submit"] {
+    width: 100%;
+}
+
+.box-add.profile-box label{
+    margin-right: 50px;
 }
 
 .box-add.profile-box .submit-btn {
