@@ -45,7 +45,7 @@ export function validate(type, inputValue) {
         case 'email':
             const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if(!(regexEmail.test(inputValue)))
-                message = '<ion-icon name="alert-circle-sharp"></ion-icon>Email is invalid';
+                message = "<ion-icon name='alert-circle-sharp'></ion-icon>Email is invalid";
             break;
         case 'username':
             const regexUsername = /^B\d{7}$/;

@@ -1,5 +1,5 @@
-import { toast } from "./general-function.js";
-import { validate } from "./general-function.js";
+import {toast} from "./general-function.js"
+import {validate} from "./general-function.js"
 
 $("document").ready(function () {
     const backLogin = $(".back-login");
@@ -88,7 +88,7 @@ $("document").ready(function () {
                 $(this).parent().find("p").append("<ion-icon name='alert-circle-sharp'></ion-icon>This field is required!");
             } else { 
                 if(validate($(this).attr("validate"), $(this).val())) {
-                    $(this).parent().find("p").text(validate($(this).attr("validate"), $(this).val()));
+                    $(this).parent().find("p").append(validate($(this).attr("validate"), $(this).val()));
                 } else {
                     if(index == 6) {
                         if($(inputSignUp[5]).val() !== $(inputSignUp[6]).val()) {
