@@ -6,17 +6,27 @@ $("document").ready(function () {
     const container = $(".container");
     const closeBtn = $(".close-btn");
     const boxAdd = $(".box-add");
-    const addSubmit = $('input[name="add_reader_submit"]');
-    const editSubmit = $('input[name="edit_reader_submit"]');
+    const addSubmitBtn = $('input[name="add_reader_submit"]');
+    const editSubmitBtn = $('input[name="edit_reader_submit"]');
     const applyBtn = $(".apply-btn");
     const showAllBtn = $("#show-all");
     var data = {};
+    var table, exportData;
+
 
     $.ajax({
         url: "../controller/readers/Readers.php",
         type: "get",
         success: function (response) {
             data = JSON.parse(response);
+            loadDataToTable(data, 1, 5);
+            table = $("#table-reader").tableExport({
+                formats: ["xlsx"],
+                exportButtons: false,
+                ignoreCols: [6],
+            });
+    
+            exportData = table.getExportData()["table-reader"]["xlsx"];
         },
     });
 
@@ -39,19 +49,6 @@ $("document").ready(function () {
             </tr>`);
         }
     }
-
-    var table, exportData;
-    setTimeout(function () {
-        loadDataToTable(data, 1, 5);
-
-        table = $("#table-reader").tableExport({
-            formats: ["xlsx"],
-            exportButtons: false,
-            ignoreCols: [6],
-        });
-
-        exportData = table.getExportData()["table-reader"]["xlsx"];
-    }, 100);
 
     $("#export-btn").click(function (e) {
         e.preventDefault();
@@ -115,7 +112,7 @@ $("document").ready(function () {
         })
     })
 
-    addSubmit.click(function (e) {
+    addSubmitBtn.click(function (e) {
         e.preventDefault();
         const username = $('.box-add.add input[name="username"]').val().trim();
         const password = $('.box-add.add input[name="password"]').val().trim();
@@ -151,7 +148,7 @@ $("document").ready(function () {
                     if (data === "success") {
                         toast({
                             title: "Success",
-                            message: "Add reader successfully",
+                            message: `Add reader ${fullname}(${username}) successfully, please reload to see new information`,
                             type: "success",
                         });
                     } else {
@@ -182,7 +179,7 @@ $("document").ready(function () {
         })
     })
 
-    editSubmit.click(function (e) {
+    editSubmitBtn.click(function (e) {
         e.preventDefault();
         const username = $('.box-add.edit input[name="username"]').val().trim();
         const fullname = $('.box-add.edit input[name="fullname"]').val().trim();
@@ -217,13 +214,13 @@ $("document").ready(function () {
                         toast({
                             title: "Success",
                             message:
-                                "Edit reader successfully, please reload to see new information",
+                                `Edit reader ${fullname}(${username}) successfully, please reload to see new information`,
                             type: "success",
                         });
                     } else {
                         toast({
                             title: "Error",
-                            message: "Edit reader failed",
+                            message: `Edit reader ${fullname}(${username}) failed`,
                             type: "error",
                         });
                     }
@@ -235,6 +232,7 @@ $("document").ready(function () {
     //Because .add-btn and .delete-btn doesn't working after adding by ajax, we use 'click' method with this solution
     $("tbody").on("click", ".edit-btn", function (e) {
         const tds = $(this).parent().siblings();
+        const username = $(tds[0]).text();
         if (confirm("Are you sure you want to edit?")) {
             e.preventDefault();
             showModal();
@@ -243,7 +241,7 @@ $("document").ready(function () {
             $.ajax({
                 url: "../controller/readers/Readers.php",
                 type: "post",
-                data: { usernameEdit: $(tds[0]).text() },
+                data: { usernameEdit: username },
                 success: function (data) {
                     const response = JSON.parse(data);
                     $('.box-add.edit input[name="username"]').val(response[0]);
@@ -261,25 +259,33 @@ $("document").ready(function () {
 
     $("tbody").on("click", ".delete-btn", function (e) {
         const tds = $(this).parent().siblings();
+        const tr = $(this).parent().parent();
+        const username = $(tds[0]).text();
+        const fullname = $(tds[1]).text();
         if (confirm("Are you sure you want to delete?")) {
             e.preventDefault();
             $.ajax({
                 url: "../controller/readers/Readers.php",
                 type: "post",
-                data: { usernameDelete: $(tds[0]).text() },
+                data: { usernameDelete: username },
                 success: function (data) {
                     if (data === "success") {
-                        location.reload();
+                        tr.remove();
+                        toast({
+                            title: "Success",
+                            message: `Reader ${fullname}(${username}) has been deleted`,
+                            type: "success",
+                        });
                     } else if(data === "isIssue") {
                         toast({
                             title: "Info",
-                            message: "This reader is borrowing book, so you can't delete",
+                            message: `Reader ${fullname}(${username}) is borrowing book, so you can't delete`,
                             type: "info",
                         });
                     } else {
                         toast({
                             title: "Error",
-                            message: "Delete reader failed",
+                            message: `Delete reader ${fullname}(${username}) failed`,
                             type: "error",
                         });
                     }

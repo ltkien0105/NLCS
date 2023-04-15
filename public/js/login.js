@@ -2,9 +2,9 @@ import {toast} from "./general-function.js"
 import {validate} from "./general-function.js"
 
 $("document").ready(function () {
-    const backLogin = $(".back-login");
-    const toSignUpBtn = $(".to-signup");
-    const signinBox = $(".box.sign-in");
+    const loginLink = $(".back-login");
+    const signUpLink = $(".to-signup");
+    const loginBox = $(".box.sign-in");
     const signupBox = $(".box.sign-up");
     const loginBtn = $("#login-btn");
     const signupBtn = $("#signup-btn");
@@ -19,15 +19,15 @@ $("document").ready(function () {
     const signUpAddress = $("input[name='signup-address']");
     const confirmPassword = $("input[name='confirm-password']");
 
-    toSignUpBtn.click(function (e) {
+    signUpLink.click(function (e) {
         e.preventDefault();
-        signinBox.css("display", "none");
+        loginBox.css("display", "none");
         signupBox.css("display", "block");
     });
 
-    backLogin.click(function (e) {
+    loginLink.click(function (e) {
         e.preventDefault();
-        signinBox.css("display", "block");
+        loginBox.css("display", "block");
         signupBox.css("display", "none");
     });
 

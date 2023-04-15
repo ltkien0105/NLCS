@@ -2,40 +2,47 @@ $(document).ready(function () {
     const lastDayBtn = $("#last-day");
     const lastWeekBtn = $("#last-week");
     const lastMonthBtn = $("#last-month");
+    const totalBooks = $("#analyze-total-book");
+    const totalReaders = $("#analyze-total-reader");
+    const totalIssueBooks = $("#analyze-total-issue");
+    const newReadersToday = $("#analyze-new-reader");
+    const tableReaders = $(".new.reader table tbody");
+    const tableBooks = $(".new.book table tbody")
     var data = {};
-    $.ajax({
-        url: "../controller/Dashboard.php",
-        type: "get",
-        success: function (response) {
-            data = JSON.parse(response);
-            console.log(data);
-
-            $("#analyze-total-book").text(data["count_book"]);
-            $("#analyze-total-reader").text(data["count_reader"]);
-            $("#analyze-total-issue").text(data["count_issue_book"]);
-            $("#analyze-new-reader").text(data["count_reader_create_today"]);
-
-            for (let i = 0; i < data["new_reader"].length; i++) {
-                $(".new.reader table tbody").append(
-                    `<tr>
-                        <td>${data["new_reader"][i]["reader_username"]}</td>
-                        <td>${data["new_reader"][i]["reader_fullname"]}</td></td>
-                        <td>${data["new_reader"][i]["reader_phonenumber"]}</td>
-                    </tr>`
-                );
-            }
-            for (let i = 0; i < data["new_book"].length; i++) {
-                $(".new.book table tbody").append(
-                    `<tr>
-                        <td>${data["new_book"][i]["book_id"]}</td>
-                        <td>${data["new_book"][i]["book_name"]}</td></td>
-                        <td>${data["new_book"][i]["book_author"]}</td>
-                    </tr>`
-                );
-            }
-        },
-    });
-
+    function showDataDashboard() {
+        $.ajax({
+            url: "../controller/Dashboard.php",
+            type: "get",
+            success: function (response) {
+                data = JSON.parse(response);
+                console.log(data);
+                totalBooks.text(data["count_book"]);
+                totalReaders.text(data["count_reader"]);
+                totalIssueBooks.text(data["count_issue_book"]);
+                newReadersToday.text(data["count_reader_create_today"]);
+                for (let i = 0; i < data["new_reader"].length; i++) {
+                    tableReaders.append(
+                        `<tr>
+                            <td>${data["new_reader"][i]["reader_username"]}</td>
+                            <td>${data["new_reader"][i]["reader_fullname"]}</td></td>
+                            <td>${data["new_reader"][i]["reader_phonenumber"]}</td>
+                        </tr>`
+                    );
+                }
+                for (let i = 0; i < data["new_book"].length; i++) {
+                    tableBooks.append(
+                        `<tr>
+                            <td>${data["new_book"][i]["book_id"]}</td>
+                            <td>${data["new_book"][i]["book_name"]}</td></td>
+                            <td>${data["new_book"][i]["book_author"]}</td>
+                            </tr>`
+                    );
+                };
+            },
+        });
+    }
+    showDataDashboard();
+            
     setTimeout(function() {
         var chartConfig = new Chart(document.getElementById("myChart"), {
             type: "bar",
@@ -63,7 +70,6 @@ $(document).ready(function () {
                 responsive: true,
             },
         });
-
         lastDayBtn.click(function() {
             lastWeekBtn.removeClass('selected');
             lastMonthBtn.removeClass('selected');

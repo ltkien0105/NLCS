@@ -17,16 +17,10 @@ $("document").ready(function () {
     const expiredDateEdit = $("input[name='edit_issue_expired']");
     const showAllBtn = $("#show-all");
     var data = {};
-
-    $.ajax({
-        url: "../controller/books/IssueBooks.php",
-        type: "get",
-        success: function (response) {
-            data = JSON.parse(response);
-        },
-    });
+    var table, exportData;
 
     function loadDataToTable(data, rowStart, rowEnd) {
+        console.log("data");
         if (rowEnd > data.length) {
             rowEnd = data.length;
         }
@@ -46,18 +40,22 @@ $("document").ready(function () {
         }
     }
 
-    var table, exportData;
-    setTimeout(function () {
-        loadDataToTable(data, 1, 5);
+    $.ajax({
+        url: "../controller/books/IssueBooks.php",
+        type: "get",
+        success: function (response) {
+            data = JSON.parse(response);
+            loadDataToTable(data, 1, 5);
 
-        table = $("#table-issue-book").tableExport({
-            formats: ["xlsx"],
-            exportButtons: false,
-            ignoreCols: [6],
-        });
+            table = $("#table-issue-book").tableExport({
+                formats: ["xlsx"],
+                exportButtons: false,
+                ignoreCols: [6],
+            });
 
-        exportData = table.getExportData()["table-issue-book"]["xlsx"];
-    }, 100);
+            exportData = table.getExportData()["table-issue-book"]["xlsx"];
+        },
+    });
 
     $("#export-btn").click(function (e) {
         e.preventDefault();
@@ -162,7 +160,7 @@ $("document").ready(function () {
                 if (data === "success") {
                     toast({
                         title: "Success",
-                        message: "Add issue book successfully, please reload to see new information",
+                        message: `Add issue book of reader ${username} and book ${id} successfully, please reload to see new information`,
                         type: "success",
                     });
                 } else if (data == "cannotIssue"){
@@ -227,11 +225,16 @@ $("document").ready(function () {
             },
             success: function (data) {
                 if (data === "success") {
-                    location.reload();
+                    toast({
+                        title: "Success",
+                        message:
+                            `Edit issue book of reader ${username} and book ${id} successfully, please reload to see new information`,
+                        type: "success",
+                    });
                 } else {
                     toast({
                         title: "Error",
-                        message: "Edit reader failed",
+                        message: `Edit issue book of reader ${username} and book ${id} failed`,
                         type: "error",
                     });
                 }
@@ -281,6 +284,10 @@ $("document").ready(function () {
 
     $("tbody").on("click", ".delete-btn", function (e) {
         const tds = $(this).parent().siblings();
+        const tr = $(this).parent().parent();
+        const readerUsername = $(tds[0]).text();
+        const bookId = $(tds[1]).text();
+        console.log(tr);
         if (confirm("Are you sure you want to delete?")) {
             e.preventDefault();
             $.ajax({
@@ -291,13 +298,17 @@ $("document").ready(function () {
                     bookIdDelete: $(tds[1]).text(),
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data === "success") {
-                        location.reload();
+                        tr.remove();
+                        toast({
+                            title: "Success",
+                            message: `Delete issue book of reader ${readerUsername} and book ${bookId} successfully`,
+                            type: "success",
+                        });
                     } else {
                         toast({
                             title: "Error",
-                            message: "Delete reader failed",
+                            message: `Delete issue book of reader ${username} and book ${id} failed`,
                             type: "error",
                         });
                     }

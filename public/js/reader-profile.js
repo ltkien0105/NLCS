@@ -4,10 +4,10 @@ import {validate} from './general-function.js'
 $("document").ready(function() {
     const posUsername = location.href.indexOf('?u=');
     const profile_username = location.href.slice(posUsername + 3);
-    const changePassBtn = $(".change-pass-btn button");
+    const changePasswordBtn = $(".change-pass-btn button");
     const changePassSubmitBtn = $('.box-add.edit.pass input[name="change-pass-submit"]');
     const issueBookLink = $(".issue");
-    const submitBtn = $("input[name='profile_reader_submit']");
+    const readerInfoApplyBtn = $("input[name='profile_reader_submit']");
     var reader_data = {};
 
     issueBookLink.attr("href", `./reader-issue.html?u=${profile_username}`);
@@ -40,7 +40,7 @@ $("document").ready(function() {
         e.stopPropagation();
     });
 
-    changePassBtn.click(function(e) {
+    changePasswordBtn.click(function(e) {
         e.preventDefault();
         $(".container").css("display", "flex");
         $(".box-add.edit").show();
@@ -130,7 +130,7 @@ $("document").ready(function() {
         })
     })
 
-    submitBtn.click(function(e) {
+    readerInfoApplyBtn.click(function(e) {
         e.preventDefault();
 
         var isValid = true;

@@ -6,16 +6,27 @@ $("document").ready(function () {
     const closeBtn = $(".close-btn");
     const boxAdd = $(".box-add");
     const addSubmit = $('input[name="add_book_submit"]');
-    const editSubmit = $('input[name="edit_book_submit"]');
+    const editSubmitBtn = $('input[name="edit_book_submit"]');
     const applyBtn = $(".apply-btn");
     const showAllBtn = $("#show-all");
     var data = {};
+    var table, exportData;
 
     $.ajax({
         url: "../controller/books/Books.php",
         type: "get",
         success: function (response) {
             data = JSON.parse(response);
+
+            loadDataToTable(data, 1, 5);
+
+            table = $("#table-book").tableExport({
+                formats: ["xlsx"],
+                exportButtons: false,
+                ignoreCols: [6],
+            });
+    
+            exportData = table.getExportData()["table-book"]["xlsx"];
         },
     });
 
@@ -38,19 +49,6 @@ $("document").ready(function () {
             </tr>`);
         }
     }
-
-    var table, exportData;
-    setTimeout(function () {
-        loadDataToTable(data, 1, 5);
-
-        table = $("#table-book").tableExport({
-            formats: ["xlsx"],
-            exportButtons: false,
-            ignoreCols: [6],
-        });
-
-        exportData = table.getExportData()["table-book"]["xlsx"];
-    }, 100);
 
     $("#export-btn").click(function (e) {
         e.preventDefault();
@@ -120,20 +118,20 @@ $("document").ready(function () {
                 if (data === "success") {
                     toast({
                         title: "Success",
-                        message: "Add book successfully, please reload to see new information",
+                        message: `Add book ${name} successfully, please reload to see new information`,
                         type: "success",
                     });
                 } else {
                     toast({
                         title: "Error",
-                        message: "Add reader failed",
+                        message: "Add book failed",
                         type: "error",
                     });
                 }},
         });
     });
 
-    editSubmit.click(function (e) {
+    editSubmitBtn.click(function (e) {
         e.preventDefault();
         const id = $('.box-add.edit input[name="edit_book_id"]').val();
         const name = $('.box-add.edit input[name="edit_book_name"]').val();
@@ -160,11 +158,16 @@ $("document").ready(function () {
             },
             success: function (data) {
                 if (data === "success") {
-                    location.reload();
+                    toast({
+                        title: "Success",
+                        message:
+                            `Edit book ${name}(${id}) successfully, please reload to see new information`,
+                        type: "success",
+                    });
                 } else {
                     toast({
                         title: "Error",
-                        message: "Add reader failed",
+                        message: `Edit reader ${name}(${id}) failed`,
                         type: "error",
                     });
                 }},
@@ -208,15 +211,23 @@ $("document").ready(function () {
 
     $("tbody").on("click", ".delete-btn", function (e) {
         const tds = $(this).parent().siblings();
+        const tr = $(this).parent().parent();
+        const id = $(tds[0]).text();
+        const name = $(tds[1]).text();
         if (confirm("Are you sure you want to delete?")) {
             e.preventDefault();
             $.ajax({
                 url: "../controller/books/Books.php",
                 type: "post",
-                data: { bookIdDelete: $(tds[0]).text() },
+                data: { bookIdDelete: id },
                 success: function (data) {
                     if (data === "success") {
-                        location.reload();
+                        tr.remove();
+                        toast({
+                            title: "Success",
+                            message: `Reader ${name}(${id}) has been deleted`,
+                            type: "success",
+                        });
                     } else if(data === "isIssue") {
                         toast({
                             title: "Info",
