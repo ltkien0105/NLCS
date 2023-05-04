@@ -208,6 +208,14 @@ table td {
     height: 90%;
 }
 
+.box-add.add.user {
+    height: 80%;
+}
+
+.box-add.edit.user {
+    height: 65%;
+}
+
 .box-add.add.book {
     height: 65%;
 }

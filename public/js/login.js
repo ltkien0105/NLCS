@@ -133,7 +133,7 @@ $("document").ready(function () {
                             toast({
                                 title: "Success",
                                 message:
-                                    "Sign up successfully, please sign in to continue.",
+                                    "Sign up successfully with, please sign in to continue.",
                                 type: "success",
                             });
                         } 

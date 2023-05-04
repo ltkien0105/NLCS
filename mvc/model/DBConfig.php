@@ -3,7 +3,7 @@
         private $hostname = 'localhost';
         private $username = 'root';
         private $pass = '';
-        private $dbname = 'id20377600_nlcs_db';
+        private $dbname = 'nlcs_db';
 
         private $conn = NULL;
         private $result = NULL;
