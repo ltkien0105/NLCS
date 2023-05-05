@@ -6,7 +6,7 @@
     if(isset($_POST["new_pass"])) {
         $username = $_POST["usernameChange"];
         $newPass = $_POST["new_pass"];
-        if($db->updatePassword($username, "password", $newPass)) {
+        if($db->updateAccount($username, "password", $newPass)) {
             echo "success";
         }
     } elseif(isset($_POST["issueUsername"])) {

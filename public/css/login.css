@@ -138,6 +138,7 @@ body {
 }
 
 .links a {
+    cursor: pointer;
     font-size: 0.8em;
     color: #45f3ff;
     text-decoration: none;
@@ -224,7 +225,8 @@ body {
     display: none;
 }
 
-.box.sign-up p {
+.box.sign-up p,
+.box.forget p {
     position: absolute;
     background-color: transparent;
     color: red;
@@ -261,6 +263,57 @@ body {
 
 .box.sign-up .had-account button:hover {
     opacity: 0.8;
+}
+
+.box.forget {
+    width: 35%;
+    height: 80vh;
+    display: none;
+}
+
+.box.forget .inputBox {
+    margin-top: 55px;
+}
+
+.box.forget .submit {
+    margin-top: 40px;
+}
+
+.box.forget button {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 32px;
+    font-size: 18px;
+    color: #45f3ff;
+    background-color: transparent;
+    border: 2px solid #45f3ff;
+}
+
+.box.forget .cancel {
+    position: relative;
+}
+
+.box.forget .cancel span {
+    position: absolute;
+    height: 60%;
+    width: 0;
+    left: 0;
+    bottom: 0;
+    transition: 0.5s;
+    background: #45f3ff;
+    z-index: -1;
+}
+
+.box.forget button {
+    cursor: pointer;
+}
+
+.box.forget button:hover {
+    color: #000;
+}
+
+.box.forget button:hover + span {
+    width: 100%;
 }
 
 select {

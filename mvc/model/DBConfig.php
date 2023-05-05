@@ -313,6 +313,13 @@
             return $this->execute($sql);
         }
 
+        public function getAccountByUserAndPass($username, $password) {
+            $sql = "SELECT * FROM accounts WHERE username = '$username' AND password = '$password'";
+            return $this->execute($sql);
+        }
+
+
+
         public function deleteAccount($username) {
             $sql = "DELETE FROM accounts WHERE username = '$username'";
             return $this->execute($sql);
@@ -348,7 +355,7 @@
             return $this->execute($sql);
         }
 
-        public function updatePassword($username, $column, $value) {
+        public function updateAccount($username, $column, $value) {
             $sql = "UPDATE accounts SET $column='$value' WHERE username='$username'";
             return $this->execute($sql);
         }
