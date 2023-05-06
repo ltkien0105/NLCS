@@ -159,6 +159,12 @@ $("document").ready(function () {
                     type: "error",
                 });
             }
+        } else {
+            toast({
+                title: "Warning",
+                message: `Please fill all fields or check format of them`,
+                type: "warning",
+            });
         }
     });
 
@@ -252,6 +258,12 @@ $("document").ready(function () {
                     type: "error",
                 });
             }
+        } else {
+            toast({
+                title: "Warning",
+                message: `Please fill all fields or check format of them`,
+                type: "warning",
+            });
         }
     });
 

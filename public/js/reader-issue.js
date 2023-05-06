@@ -51,13 +51,10 @@ $("document").ready(function() {
         data: {issueUsername: issue_username},
         success: function (response) {
             data = JSON.parse(response);
-            console.log(data);
+            
+            loadDataToTable(data, 1, 5);
         },
     });
-
-    setTimeout(function() {
-        loadDataToTable(data, 1, 5);
-    }, 100);
 
     showAllBtn.click(function (e) {
         e.preventDefault();
@@ -70,18 +67,16 @@ $("document").ready(function() {
     applyBtn.click(function (e) {
         e.preventDefault();
         const search_id = $('.search-box input[name="search-id"]')
-            .val()
-            .trim();
-        const search_name = $('.search-box input[name="search-name"]').val().trim();
+            .val() 
+        const search_name = $('.search-box input[name="search-name"]').val();
         const search_issueDate = $('.search-box input[name="search-issue"]')
-            .val()
+            .val();
         const search_expiredDate = $('.search-box input[name="search-expired"]')
-            .val()
+            .val();
         const search_amount = $('.search-box input[name="search-issue-amount"]')
-            .val()
-            .trim()
+            .val();
         const search_status = $('.search-box select[name="search-status"]')
-            .val()
+            .val();
 
         var values = [
             search_id,
@@ -91,6 +86,8 @@ $("document").ready(function() {
             search_amount,
             search_status,
         ];
+
+        console.log(values);
 
         $("tbody").each(function () {
             $(this)

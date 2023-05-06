@@ -9,18 +9,27 @@ $("document").ready(function () {
     const addSubmit = $('input[name="add_issue_submit"]');
     const editSubmit = $('input[name="edit_issue_submit"]');
     const applyBtn = $(".apply-btn");
-    const issueDateSearch = $("input[name='issue-date']");
-    const expiredDateSearch = $("input[name='expired-date']");
-    const issueDateAdd = $("input[name='add_issue_date']");
-    const expiredDateAdd = $("input[name='add_issue_expired']");
-    const issueDateEdit = $("input[name='edit_issue_date']");
-    const expiredDateEdit = $("input[name='edit_issue_expired']");
+    let issueDateSearch = $("input[name='issue-date']");
+    let expiredDateSearch = $("input[name='expired-date']");
+    let issueDateAdd = $("input[name='add_issue_date']");
+    let expiredDateAdd = $("input[name='add_issue_expired']");
+    let issueDateEdit = $("input[name='edit_issue_date']");
+    let expiredDateEdit = $("input[name='edit_issue_expired']");
     const showAllBtn = $("#show-all");
     var data = {};
     var table, exportData;
 
+    function createDatePicker(element) {
+        element.datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+        });
+    }
+
     function loadDataToTable(data, rowStart, rowEnd) {
-        console.log("data");
         if (rowEnd > data.length) {
             rowEnd = data.length;
         }
@@ -57,9 +66,21 @@ $("document").ready(function () {
         },
     });
 
+    var datepickerInputs = [
+        issueDateSearch,
+        expiredDateSearch,
+        issueDateAdd,
+        expiredDateAdd,
+        issueDateEdit,
+        expiredDateEdit,
+    ];
+
+    for (let datepickerInput of datepickerInputs) {
+        createDatePicker(datepickerInput);
+    }
+
     $("#export-btn").click(function (e) {
         e.preventDefault();
-        console.log(exportData);
         table.export2file(
             exportData.data,
             exportData.mimeType,
@@ -79,29 +100,17 @@ $("document").ready(function () {
         if (rowNumberCurrent < data.length) {
             loadDataToTable(data, rowNumberCurrent + 1, data.length);
         }
-    });
 
-    function createDatePicker(element) {
-        element.datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showOtherMonths: true,
-            selectOtherMonths: true,
+        table = $("#table-issue-book").tableExport({
+            formats: ["xlsx"],
+            exportButtons: false,
+            ignoreCols: [6],
         });
-    }
 
-    var datepickerInputs = [
-        issueDateSearch,
-        expiredDateSearch,
-        issueDateAdd,
-        expiredDateAdd,
-        issueDateEdit,
-        expiredDateEdit,
-    ];
-    for (let datepickerInput of datepickerInputs) {
-        createDatePicker(datepickerInput);
-    }
+        for (let datepickerInput of datepickerInputs) {
+            createDatePicker(datepickerInput);
+        }
+    });
 
     function showModal() {
         container.addClass("open");
@@ -331,21 +340,16 @@ $("document").ready(function () {
     applyBtn.click(function (e) {
         e.preventDefault();
         const search_username = $('.search-box input[name="reader-username"]')
-            .val()
-            .trim();
-        const search_id = $('.search-box input[name="book-id"]').val().trim();
+            .val();
+        const search_id = $('.search-box input[name="book-id"]').v;
         const search_issueDate = $('.search-box input[name="issue-date"]')
-            .val()
-            .trim();
+            .val();
         const search_expiredDate = $('.search-box input[name="expired-date"]')
-            .val()
-            .trim();
+            .val();
         const search_amount = $('.search-box input[name="amount"]')
-            .val()
-            .trim();
+            .val();
         const search_status = $('.search-box select[name="search_status"]')
-            .val()
-            .trim();
+            .val();
 
         var values = [
             search_username,
@@ -355,6 +359,7 @@ $("document").ready(function () {
             search_amount,
             search_status,
         ];
+        console.log(values);
 
         $("tbody").each(function () {
             $(this)
@@ -456,8 +461,8 @@ $("document").ready(function () {
                     $(".show.add.reader").empty();
                     $(".show.add.reader").append(`<p>Data doesn't exist</p>`);
                 } else {
-                    console.log(typeof data);
                     const response = JSON.parse(data);
+                    console.log(response);
                     $(".show.add.reader").empty();
                     $(".show.add.reader").append(
                         `<p>Username: ${response[0]}</p>

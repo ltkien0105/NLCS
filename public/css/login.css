@@ -232,7 +232,8 @@ body {
     color: red;
 }
 
-.box.sign-up ion-icon {
+.box.sign-up ion-icon,
+.box.forget ion-icon {
     transform: translateY(14%);
 }
 
